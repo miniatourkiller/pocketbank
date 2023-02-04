@@ -1,16 +1,17 @@
 package ban.pocketbanking.utilities;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Component;
 
 @Component
 public class SessionUtil {
-public String createSession(HttpSession session, String who,String email, String identityNo) {
-	if(checkSession(session)) {
+public String createSession(HttpServletRequest req, String who,String email, String identityNo) {
+	if(!checkSession(req.getSession())) {
 		return "session available";
 	}
-	session.setAttribute("details",""+who+ ""+email+":"+identityNo+"");
+	req.getSession().setAttribute("details",""+who+ ":"+email+":"+identityNo+"");
 	return "done";
 }
 
