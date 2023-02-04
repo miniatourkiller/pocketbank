@@ -16,6 +16,7 @@ import ban.pocketbanking.entities.AtmAgent;
 import ban.pocketbanking.entities.LoginDetails;
 import ban.pocketbanking.services.Login;
 import ban.pocketbanking.services.Register;
+import ban.pocketbanking.utilities.SessionUtil;
 
 @RestController
 public class BankController {
@@ -58,11 +59,21 @@ Login login;
 
 @RequestMapping(value="login", method = RequestMethod.POST)
 public String loginAccount(@RequestBody LoginDetails account, Account acc,HttpServletRequest req){
-	return login.loginAcc(acc, account, req.getSession());
+	return login.loginAcc(acc, account, req);
 }
 
 @RequestMapping(value="loginagent", method = RequestMethod.POST)
 public String loginAgent(@RequestBody LoginDetails agent, AtmAgent agt,HttpServletRequest req){
-	return login.loginAtm( agent, agt,req.getSession());
+	return login.loginAtm( agent, agt,req);
+}
+
+@RequestMapping(value="checksession")
+public String checksession(HttpServletRequest req) {
+	return (String)req.getSession().getAttribute("details");
+}
+@RequestMapping(value="logout")
+public String logout(SessionUtil su,HttpServletRequest req ) {
+	su.destroySession(req.getSession());
+	return "done";
 }
 }
