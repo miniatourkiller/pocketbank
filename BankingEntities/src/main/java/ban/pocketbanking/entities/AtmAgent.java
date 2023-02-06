@@ -17,6 +17,7 @@ private String location;
 private String password;
 private String pin;
 private String vkey;
+private int floatbalance;
 private boolean verified;
 public int getId() {
 	return id;
@@ -72,6 +73,12 @@ public String getEmail() {
 }
 public void setEmail(String email) {
 	this.email = email;
+}
+public int getFloatbalance() {
+	return floatbalance;
+}
+public void setFloatbalance(int floatbalance) {
+	this.floatbalance = floatbalance;
 }
 
 }
