@@ -13,4 +13,6 @@ Account getAccountUser(String accNo);
 	Account getVerified( String vkey);
 	@Query("FROM Account acc WHERE acc.email = ?1")
 	Account getUserByEmail(String email);
+	@Query("FROM Account acc WHERE acc.accno = ?1")
+	Account getUserByAccno(String accno);
 }

@@ -14,4 +14,6 @@ public interface AtmAgentDao extends JpaRepository<AtmAgent, Integer>{
 	
 	@Query("FROM AtmAgent agt WHERE agt.email = ?1")
 	AtmAgent getUserByEmail(String email);
+	@Query("FROM AtmAgent agt WHERE agt.agentNo = ?1")
+	AtmAgent getUserByAgentNo(String agentNo);
 }
