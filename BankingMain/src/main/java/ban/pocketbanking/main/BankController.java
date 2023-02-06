@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ban.pocketbanking.entities.Account;
 import ban.pocketbanking.entities.AtmAgent;
-import ban.pocketbanking.entities.LoginDetails;
+import ban.pocketbanking.essential.BalanceCheck;
+import ban.pocketbanking.essential.LoginDetails;
+import ban.pocketbanking.services.CheckBal;
 import ban.pocketbanking.services.Login;
 import ban.pocketbanking.services.Register;
 import ban.pocketbanking.utilities.SessionUtil;
@@ -75,5 +77,12 @@ public String checksession(HttpServletRequest req) {
 public String logout(SessionUtil su,HttpServletRequest req ) {
 	su.destroySession(req.getSession());
 	return "done";
+}
+
+@Autowired
+CheckBal cb;
+@RequestMapping(value = "balance", method= RequestMethod.POST)
+public int getBalance(@RequestBody BalanceCheck bal, HttpServletRequest req, Account account, AtmAgent agent) {
+	return cb.bal(req.getSession(), bal.getPin(), account, agent);
 }
 }
