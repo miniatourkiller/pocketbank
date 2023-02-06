@@ -24,7 +24,7 @@ public int differenceInDays(String date) {
 public String dateTime() {
 	 LocalDateTime now = LocalDateTime.now();
 	 
-	 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd;hh:mm");
+	 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd;hh:mm z");
 	 return dtf.format(now);
 }
 

@@ -34,6 +34,7 @@ public class Register {
 			acc.setPassword(se.hashPassPin(acc.getPassword()));
 			acc.setPin(se.hashPassPin(acc.getPin()));
 			acc.setVkey(gen.generatevkey());
+			acc.setBalance(0);
 			ev.verification(acc);
 			acc.setVerified(false);
 			if(accDao.save(acc) != null) {
@@ -55,6 +56,7 @@ public class Register {
 			agent.setPassword(se.hashPassPin(agent.getPassword()));
 			agent.setPin(se.hashPassPin(agent.getPin()));
 			agent.setVkey(gen.generatevkey());
+			agent.setFloatbalance(10000);
 			ev.verification(agent);
 			agent.setVerified(false);
 			if(agentDao.save(agent) != null) {

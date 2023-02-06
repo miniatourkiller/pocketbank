@@ -1,8 +1,11 @@
+ban\pocketbanking\services\AccountServices.class
 ban\pocketbanking\utilities\Generator.class
 ban\pocketbanking\utilities\SecurityEncryption.class
+ban\pocketbanking\services\CheckBal.class
 ban\pocketbanking\services\Login.class
 ban\pocketbanking\utilities\EmailSending.class
 ban\pocketbanking\utilities\EmailVerification.class
 ban\pocketbanking\services\Register.class
+ban\pocketbanking\services\AgentServices.class
 ban\pocketbanking\utilities\Time.class
 ban\pocketbanking\utilities\SessionUtil.class

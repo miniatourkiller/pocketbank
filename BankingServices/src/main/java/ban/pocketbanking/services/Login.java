@@ -7,7 +7,7 @@ import ban.pocketbanking.dao.AccountDao;
 import ban.pocketbanking.dao.AtmAgentDao;
 import ban.pocketbanking.entities.Account;
 import ban.pocketbanking.entities.AtmAgent;
-import ban.pocketbanking.entities.LoginDetails;
+import ban.pocketbanking.essential.LoginDetails;
 import ban.pocketbanking.utilities.SecurityEncryption;
 import ban.pocketbanking.utilities.SessionUtil;
 
