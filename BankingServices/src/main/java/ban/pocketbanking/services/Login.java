@@ -26,22 +26,21 @@ public String loginAcc(Account account, LoginDetails acc, HttpServletRequest req
 	account =accDao.getUserByEmail(acc.getEmail());
 	if(account != null) {
 		if(!account.isVerified()) {
-			return "You have not yet verified it's you. Check your email and if you cannt find"+
-		" a verification email, check the spam";
+			return "not verified";
 		}
 		if(se.checkPassPin(account.getPassword(), acc.getPassword())) {
 			if(su.createSession(req,"account", account.getEmail(), account.getAccno()) == "done") {
-				return "Welcome "+account.getName();
+				return "welcome";
 			}else if(su.createSession(req,"account", account.getEmail(), account.getAccno()) == "session available") {
-				return "logout first";
+				return "logout";
 			}
 			else {
-				return "failed to create a session";
+				return "failed";
 			}
 			
 		}
 	}
-	return "no account with those details, please register if no account";
+	return "register";
 }
 
 
@@ -50,18 +49,17 @@ public String loginAtm(LoginDetails agent, AtmAgent agt, HttpServletRequest req)
 	 agt =agentDao.getUserByEmail(agent.getEmail());
 	if(agt != null) {
 		if(!agt.isVerified()) {
-			return "You have not yet verified it's you. Check your email and if you cannt find"+
-		" a verification email, check the spam";
+			return "not verified";
 		}
 		if(se.checkPassPin(agt.getPassword(), agent.getPassword())) {
 			if(su.createSession(req,"agent", agt.getEmail(), agt.getAgentNo()) == "done") {
-				return "Welcome "+agt.getOwner();
+				return "welcome";
 			}else {
-				return "failed to create a session";
+				return "failed";
 			}
 			
 		}
 	}
-	return "no account with those details, please register if no account";
+	return "register";
 }
 }

@@ -86,19 +86,19 @@ public class Register {
 	public String verifyAccount(String vkey,Account account) {
 		account = accDao.getVerified(vkey);
 		if(account == null) {
-			return "vkey expired";
+			return null;
 		}
 		account.setVerified(true);
 		accDao.save(account);
-		return "<h2>You are now verified and can login</h2>";
+		return "verified";
 	}
 	public String verifyAgent(String vkey,AtmAgent agent) {
 		agent = agentDao.getVerified(vkey);
 		if(agent == null) {
-			return "vkey expired";
+			return null;
 		}
 		agent.setVerified(true);
 		agentDao.save(agent);
-		return "<h2>You are now verified and can login</h2>";
+		return "verified";
 	}
 }

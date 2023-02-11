@@ -18,6 +18,7 @@ public int differenceInDays(String date) {
 	int day = Integer.valueOf(timeArray[2]);
 	
 	LocalDate then = LocalDate.of(year, month, day);
+	//if it is negative, it is past date
 	return (int) ChronoUnit.DAYS.between(now, then);
 }
  
