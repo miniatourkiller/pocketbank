@@ -18,6 +18,8 @@ private String accno;
 private int balance;
 private String vkey;
 private boolean verified;
+private String passwordretriever;
+
 public int getId() {
 	return id;
 }
@@ -71,6 +73,12 @@ public boolean isVerified() {
 }
 public void setVerified(boolean verified) {
 	this.verified = verified;
+}
+public String getPasswordretriever() {
+	return passwordretriever;
+}
+public void setPasswordretriever(String passwordretriever) {
+	this.passwordretriever = passwordretriever;
 }
 
 }

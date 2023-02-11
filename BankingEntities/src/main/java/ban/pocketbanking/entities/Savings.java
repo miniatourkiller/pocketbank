@@ -12,7 +12,7 @@ public class Savings {
 private int id;
 private String savingAccName;
 private int balance;
-private String choice;
+private int choice;//value 0(target) and 1(duration)
 private int target;
 private String duration;
 private String accNo;
@@ -53,10 +53,10 @@ public String getSavingsAccNo() {
 public void setSavingsAccNo(String savingsAccNo) {
 	this.savingsAccNo = savingsAccNo;
 }
-public String getChoice() {
+public int getChoice() {
 	return choice;
 }
-public void setChoice(String choice) {
+public void setChoice(int choice) {
 	this.choice = choice;
 }
 public int getTarget() {

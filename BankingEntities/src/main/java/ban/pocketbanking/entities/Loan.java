@@ -13,8 +13,9 @@ private int id;
 private int balance; 
 private String accNo;
 private String duration;
-private String discipline;
-private String penalty;
+private boolean penalty;
+private int counter;
+private String penaltyDuration;
 public int getId() {
 	return id;
 }
@@ -39,18 +40,25 @@ public String getDuration() {
 public void setDuration(String duration) {
 	this.duration = duration;
 }
-public String getDiscipline() {
-	return discipline;
-}
-public void setDiscipline(String discipline) {
-	this.discipline = discipline;
-}
-public String getPenalty() {
+public boolean isPenalized() {
 	return penalty;
 }
-public void setPenalty(String penalty) {
+public void setPenalty(boolean penalty) {
 	this.penalty = penalty;
 }
+public String getPenaltyDuration() {
+	return penaltyDuration;
+}
+public void setPenaltyDuration(String penaltyDuration) {
+	this.penaltyDuration = penaltyDuration;
+}
+public int getCounter() {
+	return counter;
+}
+public void setCounter(int counter) {
+	this.counter = counter;
+}
+
 
 
 }

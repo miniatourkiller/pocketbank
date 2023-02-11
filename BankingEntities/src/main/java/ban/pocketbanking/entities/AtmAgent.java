@@ -19,6 +19,8 @@ private String pin;
 private String vkey;
 private int floatbalance;
 private boolean verified;
+private String passwordretriever;
+
 public int getId() {
 	return id;
 }
@@ -79,6 +81,12 @@ public int getFloatbalance() {
 }
 public void setFloatbalance(int floatbalance) {
 	this.floatbalance = floatbalance;
+}
+public String getPasswordretriever() {
+	return passwordretriever;
+}
+public void setPasswordretriever(String passwordretriever) {
+	this.passwordretriever = passwordretriever;
 }
 
 }
