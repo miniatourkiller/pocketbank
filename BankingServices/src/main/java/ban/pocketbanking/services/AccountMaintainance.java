@@ -104,7 +104,7 @@ AccountDao accDao;
 			p.setidentity(su.getSessionArray(session)[2]);
 			p.setFilePath(file.getOriginalFilename());
 			try {
-				file.transferTo(new File("C:\\Users\\User\\Documents\\workspace-spring-tool-suite-4-4.14.0.RELEASE\\PocketBanking\\BankingMain\\src\\main\\resources\\public\\profilepics"));
+				file.transferTo(new File("C:\\Users\\User\\Documents\\workspace-spring-tool-suite-4-4.14.0.RELEASE\\PocketBanking\\BankingMain\\src\\main\\resources\\public\\profilepics\\"+file.getOriginalFilename()));
 				pDao.save(p);
 				return "done";
 			} catch (IllegalStateException e) {
