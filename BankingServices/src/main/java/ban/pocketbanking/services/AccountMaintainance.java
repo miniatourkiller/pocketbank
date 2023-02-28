@@ -98,7 +98,7 @@ AccountDao accDao;
 	}
 	
 	public String profilePic(HttpSession session, MultipartFile file, ProfilePic p) {
-		if(session  == null) {
+		if(!su.checkSession(session)) {
 			return "expired";
 		}else {
 			p.setidentity(su.getSessionArray(session)[2]);

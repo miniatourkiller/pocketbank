@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class SessionUtil {
 public String createSession(HttpServletRequest req, String who,String email, String identityNo) {
-	if(!checkSession(req.getSession())) {
+	if(checkSession(req.getSession())) {
 		return "session available";
 	}
 	req.getSession().setAttribute("details",""+who+ ":"+email+":"+identityNo+"");
@@ -23,7 +23,7 @@ public String[] getSessionArray(HttpSession session) {
 	return ((String) session.getAttribute("details")).split(":", 3);
 }
 public boolean checkSession(HttpSession session) {
-	if(session != null) {
+	if(session.getAttribute("details") != null) {
 		return true;
 	}
 	return false;

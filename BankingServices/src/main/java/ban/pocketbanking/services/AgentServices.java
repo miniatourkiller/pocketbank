@@ -37,7 +37,7 @@ public class AgentServices {
 	DepositDao dDao;
 	
 	public boolean checkPin(HttpSession session, AtmAgent agt, PinContent pc) {
-		if(session == null) {
+		if(!su.checkSession(session)) {
 			return false;
 		}
 		agt = agtDao.getUserByAgentNo(su.getSessionArray(session)[2]);
@@ -52,7 +52,7 @@ public class AgentServices {
 	}
 	
 public String deposit(DepositDetails dd, HttpSession session, Account acc, AtmAgent agt, Deposit d) {
-	if(session == null) {
+	if(!su.checkSession(session)) {
 		return "expired";
 	}
 	agt = agtDao.getUserByAgentNo(su.getSessionArray(session)[2]);
@@ -86,7 +86,7 @@ public String deposit(DepositDetails dd, HttpSession session, Account acc, AtmAg
 
 }
 public int getFloat(HttpSession session, String pin, AtmAgent agent) {
-	if(session == null) {
+	if(!su.checkSession(session)) {
 		return -1;
 	}
 	agent = agtDao.getUserByAgentNo(su.getSessionArray(session)[2]);
@@ -98,7 +98,7 @@ public int getFloat(HttpSession session, String pin, AtmAgent agent) {
 	return -1;
 }
 public String suggestion(HttpSession session, String agentNo, AtmAgent agt) {
-	if(session == null) {
+	if(!su.checkSession(session)) {
 		return "expired";
 	}
 	agt = agtDao.getUserByAgentNo(agentNo);

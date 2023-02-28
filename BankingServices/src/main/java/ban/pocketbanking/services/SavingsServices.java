@@ -39,7 +39,7 @@ public class SavingsServices {
 	@Autowired
 	SavingsTransactionDao stDao;
 	public String createSavings(HttpSession session, Savings s, Savings s2) {
-		if(session == null) {
+		if(!su.checkSession(session)) {
 			return "expired";
 		}
 		s2 = sDao.getBysavingAccName(s.getSavingAccName());
@@ -58,7 +58,7 @@ public class SavingsServices {
 	}
 	
 	public String destroySavingAccount(	HttpSession session, String savingsAccNo, Savings s) {
-		if(session == null) {
+		if(!su.checkSession(session)) {
 			return "expired";
 		}
 		s = sDao.getBysavingsAccNo(savingsAccNo);
@@ -74,10 +74,16 @@ public class SavingsServices {
 	}
 	
 	public ArrayList<Savings> getAll(HttpSession session){
-		if(session == null) {
+		if(!su.checkSession(session)) {
 			return null;
 		}
-	return sDao.getAllSavingsAccounts(su.getSessionArray(session)[2]);
+	ArrayList<Savings> s= sDao.getAllSavingsAccounts(su.getSessionArray(session)[2]);
+	if(!s.isEmpty()){
+		return s;
+	}
+	else{
+		return null;
+	}
 	}
 	
 	public int totalSavings(HttpSession session, ArrayList<Savings> savings) {
@@ -93,7 +99,7 @@ public class SavingsServices {
 	}
 	
 	public String deposit(SavingDetails sd, HttpSession session, Account acc, Savings s, SavingsTransaction st) {
-		if(session == null) {
+		if(!su.checkSession(session)) {
 			return "expired";
 		}
 		acc = accDao.getAccountUser(su.getSessionArray(session)[2]);
@@ -123,7 +129,7 @@ public class SavingsServices {
 	}
 	
 	public String withdraw(HttpSession session, SavingDetails sd, Account acc, Savings s, SavingsTransaction st) {
-		if(session == null) {
+		if(!su.checkSession(session)) {
 			return "expired";
 		}
 		acc = accDao.getAccountUser(su.getSessionArray(session)[2]);

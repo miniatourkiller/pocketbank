@@ -45,7 +45,7 @@ public class LoanServices {
 	SavingsServices ss;
 	
 	public String requestLoan(HttpSession session, Account acc, LoanDetails ld, Loan l, int days, ArrayList<Savings> savings) {
-		if(session == null) {
+		if(!su.checkSession(session)) {
 			return "expired";
 		}
 		acc = accDao.getAccountUser(su.getSessionArray(session)[2]);
@@ -85,7 +85,7 @@ public class LoanServices {
 	}
 	
 	public Loan loanDetails(Loan l, HttpSession session) {
-		if(session == null) {
+		if(!su.checkSession(session)) {
 			return null;
 		}
 		l = lDao.getLoanUser(su.getSessionArray(session)[2]);
@@ -93,7 +93,7 @@ public class LoanServices {
 	}
 	
 	public String establishPenalty(HttpSession session, Loan l, int days) {
-		if(session == null) {
+		if(!su.checkSession(session)) {
 			return "expired";
 		}
 		l = loanDetails(l, session);
@@ -121,7 +121,7 @@ public class LoanServices {
 	}
 	
 	public String payLoan(HttpSession session, Loan l, Account acc,LoanDetails ld) {
-		if(session == null) {
+		if(!su.checkSession(session)) {
 			return "expired";
 		}
 		acc = accDao.getUserByAccno(su.getSessionArray(session)[2]);

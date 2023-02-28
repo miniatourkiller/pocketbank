@@ -43,7 +43,7 @@ public class AccountServices {
 	
 	
 	public boolean checkPin(HttpSession session, Account acc, PinContent pc) {
-		if(session == null) {
+		if(!su.checkSession(session)) {
 			return false;
 		}
 		acc = accDao.getUserByAccno(su.getSessionArray(session)[2]);
@@ -58,7 +58,7 @@ public class AccountServices {
 	}
 	
 	public int getBalance(HttpSession session, String pin, Account account) {
-		if(session == null) {
+		if(!su.checkSession(session)) {
 			return -1;
 		}
 		account = accDao.getUserByAccno(su.getSessionArray(session)[2]);
@@ -71,7 +71,7 @@ public class AccountServices {
 		return -1;
 	}
 	public String accountSuggestion(String accno, HttpSession session, Account acc) {
-		if(session == null) {
+		if(!su.checkSession(session)) {
 			return "expired";
 		}else {
 			acc = accDao.getAccountUser(accno);
@@ -82,7 +82,7 @@ public class AccountServices {
 		}
 	}
 	public String send(SendDetails sd, Account acc,Account acc1, HttpSession session, Transactions tr) {
-		if(session != null) {
+		if(!su.checkSession(session)) {
 			acc = accDao.getAccountUser(su.getSessionArray(session)[1]);
 			if(!se.checkPassPin(acc.getPin(), sd.getPin())) {
 				return "wrong pin";
@@ -116,7 +116,7 @@ public class AccountServices {
 	}
 	
 	public String withdraw(WithdrawDetails wd, Account acc, AtmAgent agt , HttpSession session, Withdraw w) {
-		if(session == null) {
+		if(!su.checkSession(session)) {
 			return "expired";
 		}
 		acc = accDao.getAccountUser(su.getSessionArray(session)[2]);
