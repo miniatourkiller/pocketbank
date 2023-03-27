@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import ban.pocketbanking.essential.BalanceCheck;
+import ban.pocketbanking.essential.C2B;
+import ban.pocketbanking.essential.C2Bresponse;
 import ban.pocketbanking.essential.DepositDetails;
 import ban.pocketbanking.essential.EmailContent;
 import ban.pocketbanking.essential.LoanDetails;
@@ -12,12 +14,14 @@ import ban.pocketbanking.essential.NewPassword;
 import ban.pocketbanking.essential.PinContent;
 import ban.pocketbanking.essential.SavingDetails;
 import ban.pocketbanking.essential.SendDetails;
+import ban.pocketbanking.essential.Token;
 import ban.pocketbanking.essential.WithdrawDetails;
 import ban.pocketbanking.services.AccountMaintainance;
 import ban.pocketbanking.services.AccountServices;
 import ban.pocketbanking.services.AgentServices;
 import ban.pocketbanking.services.Login;
 import ban.pocketbanking.services.Register;
+import ban.pocketbanking.utilities.Daraja;
 import ban.pocketbanking.utilities.EmailSending;
 
 @Configuration
@@ -85,5 +89,18 @@ AccountMaintainance setAccountMaintainance() {
 @Bean
 NewPassword setNewPassword() {
 	return new NewPassword();
+}
+
+@Bean
+C2Bresponse setC2Bresponse(){
+	return new C2Bresponse();
+}
+@Bean
+Daraja setDaraja(){
+	return new Daraja();
+}
+@Bean
+Token setToken(){
+	return new Token();
 }
 }

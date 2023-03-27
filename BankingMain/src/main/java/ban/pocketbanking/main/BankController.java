@@ -7,11 +7,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,6 +26,8 @@ import ban.pocketbanking.entities.SavingsTransaction;
 import ban.pocketbanking.entities.Transactions;
 import ban.pocketbanking.entities.Withdraw;
 import ban.pocketbanking.essential.BalanceCheck;
+import ban.pocketbanking.essential.C2B;
+import ban.pocketbanking.essential.C2Bresponse;
 import ban.pocketbanking.essential.DepositDetails;
 import ban.pocketbanking.essential.EmailContent;
 import ban.pocketbanking.essential.LoanDetails;
@@ -41,6 +44,7 @@ import ban.pocketbanking.services.LoanServices;
 import ban.pocketbanking.services.Login;
 import ban.pocketbanking.services.Register;
 import ban.pocketbanking.services.SavingsServices;
+import ban.pocketbanking.utilities.Daraja;
 import ban.pocketbanking.utilities.SessionUtil;
 
 @RestController
@@ -155,6 +159,12 @@ LoanServices ls;
 
 @Value("${loan.duration}")
 int days;
+
+@RequestMapping(value="checklimit", method = RequestMethod.GET)
+public int checkLimit(HttpServletRequest req, ArrayList<Savings> savings){
+	return ls.checkLimit(req.getSession(), savings);
+}
+
 @RequestMapping(value = "requestloan", method= RequestMethod.POST)
 public String requestLoan(HttpServletRequest req, ArrayList<Savings> savings, Account acc,@RequestBody LoanDetails ld, Loan l) {
 	return ls.requestLoan(req.getSession(), acc, ld, l, days, savings);
@@ -177,18 +187,24 @@ public String establishPenalty(HttpServletRequest req, Loan l) {
 @Autowired
 SavingsServices ss;
 
-@RequestMapping(value = "getsavingsaccounts", method= RequestMethod.POST)
+@RequestMapping(value = "getsavingsaccounts", method= RequestMethod.GET)
 public ArrayList<Savings> getsavingsaccounts(HttpServletRequest req){
 	return ss.getAll(req.getSession());
 }
+
+@RequestMapping(value = "getsavingsaccount/{savingsaccountname}", method = RequestMethod.GET)
+public Savings getsavingaccount(@PathVariable("savingsaccountname") String savingsAccName, HttpServletRequest req){
+	return ss.getSavingaccount(savingsAccName,req.getSession());
+}
+
 @RequestMapping(value = "createsavingsaccount", method= RequestMethod.POST)
 public String createsavingsaccount(HttpServletRequest req,@RequestBody Savings s, Savings s2) {
 	return ss.createSavings(req.getSession(), s, s2);
 }
 
 @RequestMapping(value = "destroysavingsaccount/{savingsaccno}")
-public String destroysavingsaccount(@PathVariable("savingsaccno") String savingsAccNo, HttpServletRequest req, Savings s) {
-	return ss.destroySavingAccount(req.getSession(), savingsAccNo, s);
+public String destroysavingsaccount(@PathVariable("savingsaccno") String savingsAccName, HttpServletRequest req, Savings s) {
+	return ss.destroySavingAccount(req.getSession(), savingsAccName, s);
 }
 
 @RequestMapping(value = "depositsavings", method= RequestMethod.POST)
@@ -227,7 +243,7 @@ public String help(@RequestBody EmailContent m) {
 }
 
 @RequestMapping(value = "profilepic")
-public String profilepic(@RequestParam("file") MultipartFile file, ProfilePic p, HttpServletRequest req) {
+public String profilepic(@RequestPart("file") MultipartFile file, ProfilePic p, HttpServletRequest req) {
 	return am.profilePic(req.getSession(), file, p);
 }
 @RequestMapping(value = "getprofilepic")
@@ -235,5 +251,10 @@ public ProfilePic getprofilepic( HttpServletRequest req) {
 	return am.getPic(req.getSession());
 }
 
-
+@Autowired
+Daraja daraja;
+@RequestMapping(value = "daraja", method= RequestMethod.POST)
+public C2Bresponse daraja(@RequestBody C2B c2b){
+return daraja.testApiC2B(c2b);
+}
 }
