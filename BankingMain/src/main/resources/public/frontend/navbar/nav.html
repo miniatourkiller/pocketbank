@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../navbar/all.min.css">
+    <link rel="stylesheet" href="../navbar/fontawesome.min.css">
+    <style>
+.nav-bar{
+    display: flex;
+    height: 120px;
+    width: 100%;
+    background-color: rgb(76, 88, 91);
+    align-items: center;
+    position: fixed;
+    z-index: 1000;
+        font-family: 'Courier';
+
+}
+.menu{
+    display: flex;
+    list-style: none;
+}
+li{
+    text-align: center;
+}
+.unordered{
+    margin-left: 20%;
+}
+a{
+    color: white;
+    font-size: 25px;
+    text-decoration: none;
+    height: 70px;
+    border-radius: 20px;
+    margin: 18px;
+    transition-duration: 0.7s;
+    padding: 10px;
+}
+a:hover{
+    background-color: grey;
+    color: rgb(44, 44, 44);
+}
+.logo{
+    background-image: url("../navbar/logo2.png");
+    height: 120px;
+    width: 120px;
+    background-size: cover;
+    z-index: 5454147;
+}
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <div class="logo" >
+        </div>
+        <div class="unordered">
+            <ul class="menu">
+                <a href=""><li><i class="fa fa-home"></i><br><span class="menuli">Home</span></li></a>
+<a href=""><li><i class="fa fa-book"></i><br><span class="menuli">Account</span></li></a>
+<a href=""><li><i class="fa fa-sign-out"></i><br><span class="menuli">Logout</span></li></a>
+<a href=""><li><i class="fa fa-phone"></i><br><span class="menuli">Contact</span></li></a>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

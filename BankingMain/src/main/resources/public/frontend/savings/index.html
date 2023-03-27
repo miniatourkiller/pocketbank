@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../navbar/all.min.css">
+    <link rel="stylesheet" href="../navbar/fontawesome.min.css">
+    <link rel="stylesheet" href="../savings/popup.css">
+    <style>
+body{
+background-image: linear-gradient(rgba(32, 32, 32, 0.7), rgba(38, 38, 38, 0.7)), url(img3.jpg);
+background-repeat: no-repeat;
+background-size: cover;
+background-attachment: fixed;
+color: white;
+height: 100%;
+margin:0px;
+padding:0px;
+    font-family: 'Courier';
+
+}
+.container {
+            position: fixed;
+            height: 100vh;
+            width: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 4545454;
+            
+}
+
+        .card {
+            height: 350px;
+            width: 300px;
+            box-sizing: border-box;
+            box-shadow: 0px 3px 5px white;
+            background-color: rgb(14, 13, 13,0.9);
+            padding: 10px;
+            border-radius: 10px;
+        }
+.details{
+    height: 40vh;
+    width: 99vw;
+    background: rgba(27, 24, 24, 0.9);
+    margin-top: -20px;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+    text-align: center;
+}
+.details i{
+    font-size: 100px;
+    color: rgb(107, 100, 100);
+}
+.carrier{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.savings{
+    height: 10em;
+    width: 40%;
+        background-image: linear-gradient(rgba(32, 32, 32, 0.7), rgba(38, 38, 38, 0.7)), url(ourcard2.jpg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    box-sizing: border-box;
+    box-shadow: 0 3px 5px black;
+    border-radius: 30px;
+    text-shadow: 0 3px 2px black;
+}
+.savings:last-child{
+    display: none;
+}
+.savings span{
+    position: absolute;
+    margin-top: 3em;
+}
+.addsavings{
+    height: 10em;
+    width: 10em;
+    margin: 20px;
+         background-image: linear-gradient(rgba(32, 32, 32, 0.7), rgba(38, 38, 38, 0.7)), url(ourcard1.jpg);
+         background-position: center;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         border-radius: 10px;
+  
+}
+.fa-plus{
+font-size: 60px;
+margin-top: -20px;
+}
+.addsavings span{
+position: absolute;
+margin-top: 80px;
+font-size: 15px;
+}
+.main{
+    position: absolute;
+    margin-top: 90px;
+}
+.savings h2{
+        font-family: 'Bahnschrift SemiBold';
+
+}
+.conte{
+    display: block;
+}
+.conte input,select{
+height: 30px;
+width: 90%;
+margin: 10px;
+background-color: rgb(237, 225, 225);
+color: rgb(18, 16, 16);
+font-size: 15px;
+outline: none;
+text-align: center;
+border: solid 1px black;
+border-radius: 5px;
+}
+.buttons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+.buttons button{
+    height: 30px;
+    border: none;
+    margin: 5px;
+    border-radius: 3px;
+    font-size: 20px;
+    color: white;
+}
+.submit{
+    background: green
+}
+.cancel{
+    background-color: brown;
+}
+.target,.date{
+display: none;
+}
+    </style>
+</head>
+<body>
+
+  
+    <div class="nav"></div>
+
+    <!-- code for the popup form-->
+    <div class="container">
+        <div class="card">
+            <h3>CREATE SAVINGS ACCOUNT</h3>
+            <div class="conte">
+                <input type="text" class="accname" placeholder="Enter account name">
+                <select name="" id="" class="choice">
+                    <option value="">Select savings parameters</option>
+                    <option value="target">Target</option>
+                    <option value="duration">Date</option>
+                </select>
+                <input type="number" class="target" placeholder="Enter target amount">
+                <input type="date" class="date" placeholder="Choose date">
+            </div>
+ <div class="buttons">
+    <button class="submit">Add Account</button>
+    <button class="cancel">cancel</button>
+ </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="main">
+        <div class="details">
+            <h2>LOCKED SAVINGS ACCOUNT</h2><br>
+            <i class="fa fa-vault"></i><br>
+            <span>You can create a savings account according to your preference</span><br>
+            <h4><span class="amount"></span> savings account(s)</h4>
+        </div>
+        <div class="carrier">
+
+
+            <div class="savings">
+                <h2 class="name">SCHOOL SAVINGS ACCOUNT</h2>
+                <br>
+                <span>current total savings: ksh 50.00</span>
+            </div>
+            <div class="savings">
+                <h2 class="name">MARRIAGE SAVINGS ACCOUNT</h2>
+                <br>
+                <span>current total savings: ksh 0.00</span>
+            </div>
+        
+            <div class="addsavings">
+                <span>Add Account</span>
+                <i class="fa fa-plus"></i>
+            </div>
+        </div>
+    </div>
+
+    <script src="../savings/jquery.js"></script>
+    <script>
+        $('.nav').load("../navbar/nav.html");
+        $('.addsavings').click(function(){
+            $('.container').css({
+                "display":"flex"
+            })
+        })
+        $('.cancel').click(function(){
+             $('.container').css({
+                "display": "none"
+            })
+        })
+        const divs = document.querySelectorAll('.savings');
+
+        $('.amount').text(divs.length)
+
+        const choice = document.querySelector('.choice');
+
+        choice.addEventListener('input', function(){
+            if(choice.value == "target"){
+                $('.target').css({
+                    "display":"block"
+                })
+                  $('.date').css({
+                    "display": "none"
+                })
+            }else if(choice.value == "duration"){
+                $('.date').css({
+                    "display": "block"
+                })
+                  $('.target').css({
+                    "display": "none"
+                })
+            }else{
+                  $('.date').css({
+                    "display": "none"
+                })
+                $('.target').css({
+                    "display": "none"
+                })
+            }
+        })
+
+        $('.savings').click(function(){
+            var name = $('.name').eq($(this).index()).text();
+            window.location = "./saving.html?name="+name;
+        })
+    </script>
+</body>
+</html>

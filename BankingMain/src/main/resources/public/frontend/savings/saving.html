@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savings</title>
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+
+<body>
+    <div class="nav"></div>
+    <div class="main">
+        <div class="savings">
+            <!--delete dots-->
+            <div class="delete">
+                <i class="fa fa-ellipsis-v"></i>
+            </div>
+<!--menu-->
+<div class="menushowed">
+    <ul>
+        <li>Account Details</li>
+        <li>Delete Account</li>
+    </ul>
+</div>
+            <div class="savings-header" style="margin:10px;text-align: center">
+                <i class="fa fa-vault" style="font-size: 90px; color: rgb(117, 116, 116);margin: 10px"></i><br>
+                <h3 class="name"></h3>
+            </div>
+            <div class="savings-details" style="text-align:center; margin: 20px;">
+                Balance: <span id="balance">ksh 50.00</span><i class="fa fa-eye"></i><br>
+                <br>
+                <p></p>
+            </div>
+        </div>
+        <div class="container">
+            <div class="card">
+                <div class="inner-box" id="card">
+                    <div class="card-front">
+                        <h2>DEPOSIT</h2>
+                        <form>
+                            <input type="number" class="input-box" placeholder="Enter Amount" required>
+                            <input type="text" id="password" class="input-box" placeholder="Enter Pin" required>
+                            <button type="submit" class="submit-btn">deposit</button>
+                        </form>
+                        <button type="button" class="btn" onclick="openRegister()">Want to withdraw?</button>
+                    </div>
+                    <div class="card-back">
+                        <h2>WITHDRAW</h2>
+                        <form>
+                            <input type="number" class="input-box" placeholder="Enter Amount" required>
+                            <input type="text" id="password" class="input-box" placeholder="Enter Pin" required>
+                            <button type="submit" class="submit-btn">withdraw</button>
+                        </form>
+                        <button type="button" class="btn" onclick="openLogin()">Want to deposit?</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="jquery.js"></script>
+    <script src="script.js"></script>
+    <script>
+        var url = window.location.search;
+        var name = new URLSearchParams(url).get("name");
+        $('.name').text(name);
+
+    </script>
+</body>
+
+</html>

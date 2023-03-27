@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="./navbar/all.min.css">
+    <link rel="stylesheet" href="./navbar/fontawesome.min.css">
+    <style>
+        body{
+            margin: 0px;
+            padding: 0px;
+            background-image: linear-gradient(to right, rgba(60, 62, 61, 0.9), rgba(51, 52, 51, 0.9)),url("./savings/img3.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .main{
+            position: absolute;
+            margin-top: 110px;
+        }
+        .containment{
+            display: flex;
+            height: 70px;
+            width: 100%;
+        }
+        .sidebar{
+            height: 70vh;
+            width: 20%;
+            background-color: grey;
+            text-align: center;
+        }
+        .sidebar ul{
+            list-style: none;
+        }
+        .sidebar ul li{
+            position: relative;
+            margin-top: 20px;
+            padding: 12px;
+        }
+        .sidebar ul li:hover{
+            background-color: rgb(144, 143, 143);
+        }
+       .active{
+        border: 8px solid rgb(149, 148, 148);
+        border-top-left-radius: 12px;
+        border-bottom-left-radius: 12px;
+       }
+       .content{
+width: 80%;
+height: 70vh;
+       }
+       .footer{
+        height: 250px;
+        width: 100%;
+        position: relative;
+        margin-top: 60vh;
+        overflow: hidden;
+        text-align: center;
+       }
+       .holder{
+        width: 100%;
+        height: 250px;
+        text-align: center;
+        padding: 50px;
+       }
+       .images{
+        width: 400%;
+        height: 250px;
+        display: flex;
+        transition-duration: 0.5s;
+       }
+       .img1{
+       background-image: linear-gradient(rgba(28, 27, 27, 0.5), rgba(0, 0, 0, 0.5)), url("./send.jpg");
+       background-position: center;
+       background-size: cover;
+       background-repeat: no-repeat;
+       }
+       .img2{
+           background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("./withdraw.jpg");
+              background-position: center;
+       background-size: cover;
+       background-repeat: no-repeat;
+       }
+       .img3{
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("./loan.jpg");
+               background-position: center;
+       background-size: cover;
+       background-repeat: no-repeat;
+       }
+       .img4{
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("./savings2.jpg");
+               background-position: center;
+       background-size: cover;
+       background-repeat: no-repeat;
+       }
+       .dotdot{
+        margin-top:-70px;
+        font-size: 25px;
+        display: flex;
+        position: absolute;
+       }
+       .dot{
+        color: brown;
+        margin-left: 50px;
+        cursor: pointer;
+       }
+       .dotactive{
+        color: white;
+       }
+       .sidebar i{
+        color: rgb(23, 70, 101);
+        margin-right: 5px;
+       }
+       .menutext{
+        position: absolute;
+       }
+       .loader{
+        height: 70vh;
+        width: 80%;
+        background-color: rgba(80, 78, 78,0.5);
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+       }
+       .img{
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+       }
+    </style>
+</head>
+<body>
+    <div class="nav">
+
+    </div>
+    <div class="main">
+        <div class="containment">
+            <div class="sidebar">
+                <img class="img" src="./send.jpg" alt=""><h3>James Karu</h3>
+                <ul>
+                    <li class="choice send active"><i class="fa fa-paper-plane"></i><span class="menutext">Send</span></i></li>
+                    <li class="choice withdraw"><i style="margin-top:10px" ><img src="./sendicon.png" alt="" height="30px" width="30px"></i><span class="menutext">Withdraw</span></li>
+                    <li class="choice loans"><i class="fa-solid fa-hand-holding-dollar"></i><span class="menutext">Loans</span></li>
+                    <li class="choice savings-bar"><i class="fa fa-piggy-bank"></i><span class="menutext">Savings</span></i></li>
+                </ul>
+            </div>
+
+            <div class="content">
+<div class="loader">
+<h1>Loading .....</h1>
+</div>
+            </div>   
+        </div>
+    <div class="footer">
+        <div class="images">
+            <div class="holder img1">
+                <h2>GET TO SEND MONEY TO FAMILY</h2>
+                <P>All you need is just an account</P>
+            </div>
+            <div class="holder img2">
+                <h2>WITHDRAW AT ANY AGENT AT YOUR REACH</h2>
+                <P>Get to withdraw and cash out at any place you are in</P>
+            </div>
+            <div class="holder img3">
+                <h2>WHEN YOU ARE STUCK, GET A LOAN</h2>
+                <P>Get to withdraw and cash out at any place you are in</P>
+            </div>
+            <div class="holder img4">
+                <h2>CREATE MORE THAN ONE SAVINGS ACCOUNTS THAT WILL GET YOU YOUR DREAMS</h2>
+                <P>Get to withdraw and cash out at any place you are in</P>
+            </div>
+        </div>
+    <div class="dotdot">
+        <div class="dot dotactive">
+            <h1>.</h1>
+        </div>
+        <div class="dot">
+            <h1>.</h1>
+        </div>
+        <div class="dot">
+            <h1>.</h1>
+        </div>
+        <div class="dot">
+            <h1>.</h1>
+        </div>
+    </div>
+    </div>
+    </div>
+  
+    <script src="./savings/jquery.js"></script>
+    <script>
+        $('.nav').load("./navbar/nav.html");
+        $('.content').load("./send.html")
+        $('.choice').click(function(){
+           if($(this).hasClass("active")){
+            return;
+           }else{
+            $('.loader').css({
+                   "display": "block"
+               })
+            $(".choice").removeClass("active")
+            $(this).addClass("active")
+            if($(this).hasClass("send")){
+                        $('.content').load("./send.html")
+                        $('.content').css({
+                    "overflow-y": "hidden"
+                })
+            }else if($(this).hasClass("withdraw")){
+                        $('.content').load("./withdraw.html")
+                        $('.content').css({
+                    "overflow-y": "hidden"
+                })
+
+            }else if($(this).hasClass("loans")){
+                $('.content').load("./loansmenu.html");
+               $('.content').css({
+                "overflow-y": "scroll"
+               })
+            }else if($(this).hasClass("savings-bar")){
+                  $('.content').load("./savingsmenu.html");
+                  $('.content').css({
+                    "overflow-y": "hidden"
+                })
+            }
+           }
+        })
+        var tracker = 0;
+        $('.dot').click(function(){
+           if($(this).hasClass("dotactive")){
+            return;
+           }else{
+            tracker = $(this).index() * 100;
+               $('.images').css({
+                   "margin-left": -tracker + "%"
+               })
+               $('.dot').removeClass("dotactive");
+               $('.dot').eq($(this).index()).addClass("dotactive")
+           }
+        })
+
+        setInterval(() => {
+             tracker = tracker + 100;
+             if(tracker ==400){
+                tracker =0
+             }
+               $('.images').css({
+                   "margin-left": -tracker + "%"
+               })
+               $('.dot').removeClass("dotactive");
+            $('.dot').eq(tracker/100).addClass("dotactive")
+    
+        }, 6000);
+        document.querySelector('.content').addEventListener('load',function(){
+            $('.loader').css({
+                "display": "none"
+            })
+        })
+    </script>
+</body>
+</html>

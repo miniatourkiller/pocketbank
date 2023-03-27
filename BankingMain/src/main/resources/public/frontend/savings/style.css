@@ -1,0 +1,191 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+        background-image: linear-gradient(rgba(32, 32, 32, 0.7), rgba(38, 38, 38, 0.7)), url(img3.jpg);
+        background-attachment: fixed;
+            background-position: center;
+                background-size: cover;
+                color: white;
+}
+.container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.card{
+    width: 95%;
+    height: 350px;
+    box-shadow: 0 0 40px 20px rgba(0,0,0,0.26);
+    perspective: 1000px;
+    margin-top: 10px;
+}
+.avatar{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    position: absolute;
+    top: -50px;
+    left: 36%;
+}
+.inner-box{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 1s;
+}
+.card-front, .card-back{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    background-image: linear-gradient(rgba(48, 48, 48, 0.8),rgba(47, 46, 47, 0.8));
+    padding: 55px;
+    box-sizing: border-box;
+    backface-visibility: hidden;
+    border-radius: 10px;
+}
+.card-back{
+    transform: rotateY(180deg);
+}
+.card h2{
+    font-weight: normal;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.input-box{
+    width: 100%;
+    background: transparent;
+    border: 1px solid #fff;
+    margin: 6px 0;
+    height: 40px;
+    border-radius: 20px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    outline: none;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+}
+::placeholder{
+    color: #fff;
+    font-size: 12px;
+}
+button{
+    width: 100%;
+    background: transparent;
+    border: 1px solid #fff;
+    margin: 35px 0 10px;
+    height: 32px;
+    font-size: 12px;
+    border-radius: 20px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    outline: none;
+    color: #fff;
+    cursor: pointer;
+}
+button:hover{
+    color: whitesmoke;
+    background: tomato;
+}
+.submit-btn{
+    position: relative;
+}
+.submit-btn::after{
+    content: '\27a4';
+    color: #333;
+    line-height: 32px;
+    font-size: 17px;
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    background: #fff;
+    position: absolute;
+    right: -1px;
+    top: -1px;
+}
+span{
+    font-size: 13px;
+    margin-left: 10px;
+}
+.card .btn{
+    margin-top: 20px;
+}
+.card a{
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    font-size: 13px;
+    margin-top: 8px;
+}
+.card a:hover{
+    color: tomato;
+}
+#message{
+    position: relative;
+    bottom: -5px;
+    color: white;
+    font-size: 13px;
+    display: none;
+}
+#message2{
+    display: none;
+}
+#message3 {
+    display: none;
+}
+.savings{
+    height: 30vh;
+    width: 100%;
+    background-color: rgba(40, 39, 39, 0.9);
+    margin-top:-10px;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+}
+.main{
+    position: absolute;
+    margin-top: 120px;
+    height: 100%;
+    width: 100%;
+}
+.delete{
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    background-color: grey;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom-right-radius: 5px;
+    box-sizing: border-box;
+    box-shadow: 0px 5px 5px black;
+}
+.menushowed{
+    position: absolute;
+    height: 100px;
+    width: 200px;
+    background-color: rgb(130, 125, 125);
+    color: black;
+    margin-top: 45px;
+    margin-left: 5px;
+    display: none;
+}
+.menushowed li{
+    padding: 15px;
+    border-bottom: solid 1px black;
+    cursor: pointer;
+}
+.menushowed li:nth-child(2){
+    border-bottom: none;
+}
+.menushowed li:hover{
+    background-color: black;
+    color: white;
+}

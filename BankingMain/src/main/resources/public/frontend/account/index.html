@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Registration</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="inner-box" id="card">
+                <div class="card-front">
+                    <h2>LOGIN</h2>
+                    <img src="img_avatar2-png-9.png" class="avatar">
+                    <form>
+                        <input type="email" class="input-box" placeholder="Enter Email Id" required>
+                        <input type="password" id="password" class="input-box" placeholder="Enter Password" required>
+                        <button type="submit" class="submit-btn">Login</button>
+                    </form>
+                    <button type="button" class="btn" onclick="openRegister()">Don't have an account?</button>
+                    <a href="./forgetpass.html">Forgot Password</a>
+                </div>
+                <div class="card-back">
+                    <img src="img_avatar2-png-9.png" class="avatar">
+                    <h2>REGISTER</h2>
+                    <form>
+                        <input type="text" class="input-box" placeholder="Enter Username" required>
+                        <input type="email" class="input-box" placeholder="Enter Email Id" required>
+                        <small id="message2" style="color: #ff5925">Passwords dont match</small>
+                        <input type="password" id="rpassword" class="input-box" placeholder="Enter Password" required>
+                        <p id="message">Password is<span id="strength"></span></p>
+                        
+                        <input type="password" id="rcpassword" class="input-box" placeholder="Confirm Password" required>
+                        <small id="message3" style="color: #ff5925">Pins dont match</small>
+                        <input type="password" id="pin" class="input-box" placeholder="Enter pin" required>
+                        <input type="password" id="cpin" class="input-box" placeholder="Confirm pin" required>
+                        <p id="message">Password is <span id="strength"></span></p>
+                        <button type="submit" class="submit-btn">Register</button>
+                    </form>
+                    <button type="button" class="btn" onclick="openLogin()">I've an account</button>
+                </div>
+            </div>
+        </div>
+    </div>  <script src="jquery.js"></script>
+    <script src="script.js"></script>
+  
+</body>
+</html>

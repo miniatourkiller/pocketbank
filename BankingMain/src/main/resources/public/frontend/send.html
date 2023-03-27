@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./savings/style.css">
+</head>
+<body>
+        <div class="container" style="background-color: rgba(26, 24, 24,0.9); height: 70vh">
+            <div class="card">
+                <div class="inner-box" id="card">
+                    <div class="card-front">
+                        <h2>SEND</h2>
+                        <form>
+                            <input type="text" class="accno input-box" placeholder="Enter Account Number" required>
+                            <input type="number" class="amount input-box" placeholder="Enter Amount" required>
+                            <input type="text" id="pin" class="input-box" placeholder="Enter Pin" required>
+                            <button type="submit" class="submit-btn">SEND</button>
+                        </form>
+                    </div>
+                  
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <script src="/savings/jquery.js"></script>
+        <script>
+$('.submit-btn').click(function(e){
+e.preventDefault()
+var accno = $('.accno').val()
+var amount = $('.amount').val()
+var pin = $('#pin').val()
+
+    $.ajax({
+        type: "get",
+        url: `http://localhost:8089/accountsuggestion/${accno}`,
+        
+        success: function (data) {
+            if(data == "expired"){
+                window.location = "./account/index.html"
+                return;
+            }else if(data == "no user"){
+                alert("no user with tha account number")
+                $('.accno').val();
+                return;
+            }
+            if(confirm("You want to send money to "+data)){
+                var mydata = {
+                    "amount": amount,
+                    "accno": accno,
+                    "pin": pin
+                }
+                
+                $.ajax({
+                    type: "post",
+                    url: "http://localhost:8089/send",
+                    contentType: "application/json",
+                    data: JSON.stringify(mydata),
+                    success: function (data) {
+                        if (data == "wrong pin") {
+                            alert("Wrong pin")
+                        } else if (data == "insufficient") {
+                            alert("You have insuficient funds")
+                        } else if (data == "done") {
+                            alert("Sent")
+                        } else if (data == "error") {
+                            alert("there was a problem")
+                        }
+                    }
+                })
+            }else{
+                $('.accno').val("");
+                return;
+            }
+        }
+    })
+
+
+})
+
+        </script>
+</body>
+</html>

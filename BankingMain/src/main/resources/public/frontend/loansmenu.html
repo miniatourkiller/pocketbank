@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+        <link rel="stylesheet" href="./savings/style.css">
+        <link rel="stylesheet" href="./navbar/all.min.css">
+        <link rel="stylesheet" href="./navbar/fontawesome.min.css">
+
+    <style>
+        .loans-menu{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(21, 20, 20, 0.9);
+        }
+        .loans-menu .check-limit,.apply-loan,.repay-loan,.check-loan{
+height: 120px;
+width: 50%;
+background-size: cover;
+background-repeat: no-repeat;
+border-radius: 30px;
+display: flex;
+align-items: center;
+justify-content: center;
+margin: 20px;
+box-sizing: border-box;
+box-shadow: 0px 3px 4px 0.5px rgb(251, 247, 247);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url(./savings/ourcard1.jpg);
+cursor: pointer;
+position: inherit;
+        }
+        span{
+            margin-right: 15px
+        }
+    
+        .outer{
+            width: 50%;
+            height: 0;
+            position: relative;
+            overflow: hidden;
+            transition-duration: 0.5s;
+        }
+     .button-show{
+        height: 30px;
+        width: 250%;
+        background-color: brown;
+        position: relative;
+        color: black;
+        text-align: center;
+        margin-top: 20px;
+        margin-left: -90px;
+     }
+
+.master{
+    text-align: center;
+}
+.deets span{
+    font-size: 20px;
+}
+       
+    </style>
+</head>
+<body>
+   <div class="loans-menu">
+    <div class="check-limit">
+        <h3>LIMIT: ksh<span class="limit">****</span><i class="showlimit fa fa-eye"></i></h3>
+    </div>
+
+
+
+    <div class="apply-loan">
+
+      <div class="master">
+        <h3>APPLY LOAN</h3>
+        <div class="button-show one">
+            <i class="fa fa-arrow-down"></i>
+        </div>
+      </div>
+
+    </div>
+       <div class="outer">
+            <div class="card-front">
+                <form>
+                    <input type="number" class="input-box" placeholder="Enter Amount" required>
+                    <input type="text" id="password" class="input-box" placeholder="Enter Pin" required>
+                    <button type="submit" class="submit-btn">Apply Loan</button>
+                </form>
+            </div>
+        </div>
+    <div class="repay-loan">
+       <div class="master">
+        <h3>REPAY LOAN</h3>
+        <div class="button-show two">
+            <i class="fa fa-arrow-down"></i>
+        </div>
+       </div>
+    </div>
+    <div class="outer">
+        <div class="card-front">
+            <form>
+                <input type="number" class="input-box" placeholder="Enter Amount" required>
+                <input type="text" id="password" class="input-box" placeholder="Enter Pin" required>
+                <button type="submit" class="submit-btn">Repay Loan</button>
+            </form>
+        </div>
+    </div>
+    <div class="check-loan">
+
+
+        <div class="master">
+            <h3>CHECK LOAN</h3>
+            <div class="button-show three">
+                <i class="fa fa-arrow-down"></i>
+            </div>
+        </div>
+
+    </div>
+<div class="outer">
+        <div class="card-front">
+            <form class="deets">
+               <h1>BALANCE: ksh <span class="bal">50.00</span><br></h1>
+              <h1>DUE: <span>14/3/2020</span><br></h1>
+              <h1>PENALTY: <span>NO PENALTY</span><br></h1>
+              <h1>PENALTY DURATION: <span>N/O</span></h1>
+            </form>
+        </div>
+    </div>
+    
+   </div>
+   <script src="./savings/jquery.js"></script>
+   <script>
+    var counter2 = 0;
+    var counter1 = 0;
+    var counter3 = 0
+$('.button-show').click(function(){
+ if($(this).hasClass('one')){
+    counter1++;
+if(counter1 == 2){
+    counter1 = 0
+}
+     if (counter2 == 1) {
+         $('.outer').eq(1).css({
+             "height": "0"
+         })
+         counter2 = 0;
+     }else if(counter3 == 1){
+        $('.outer').eq(2).css({
+             "height": "0"
+         })
+         counter3 = 0;
+     }
+if(counter1 == 1){
+    $('.outer').eq(0).css({
+        "height": "40vh"
+    })
+}else if(counter1 == 0){
+   $('.outer').eq(0).css({
+        "height": "0"
+    }) 
+}
+ }else if($(this).hasClass('two')){
+    counter2++;
+    if (counter2 == 2) {
+         counter2 = 0
+     }
+     if(counter1 == 1){
+        $('.outer').eq(0).css({
+             "height": "0"
+         }) 
+         counter1 = 0;
+     } else if (counter3 == 1) {
+         $('.outer').eq(2).css({
+             "height": "0"
+         })
+         counter3 = 0;
+     }
+
+     if (counter2 == 1) {
+         $('.outer').eq(1).css({
+             "height": "40vh"
+         })
+     } else if (counter2 == 0) {
+         $('.outer').eq(1).css({
+             "height": "0"
+         })
+     }
+ }else if($(this).hasClass('three')){
+     counter3++;
+     if (counter3 == 2) {
+         counter3 = 0
+     }
+     if (counter2 == 1) {
+         $('.outer').eq(1).css({
+             "height": "0"
+         })
+         counter2 = 0;
+     } else if (counter1 == 1) {
+         $('.outer').eq(0).css({
+             "height": "0"
+         })
+         counter1 = 0;
+     }
+
+     if (counter3 == 1) {
+         $('.outer').eq(2).css({
+             "height": "40vh"
+         })
+     } else if (counter3 == 0) {
+         $('.outer').eq(2).css({
+             "height": "0"
+         })
+     }
+ }
+  
+})
+  var  tracker = 0;
+$('.showlimit').click(function(){
+    var limit = 400;
+
+    tracker ++;
+
+    if(tracker == 2){
+        tracker = 0;
+    }
+    if(tracker == 1){
+        $('.limit').text(limit);
+    }else if(tracker == 0){
+         $('.limit').text("****");
+    }
+
+})
+   </script>
+</body>
+</html>

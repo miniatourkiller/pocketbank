@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset password</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="inner-box" id="card">
+                <div class="card-front">
+                    <h2>RESET PASSWORD</h2>
+                    <form>
+                        <input type="email" class="input-box" placeholder="Enter Email Id" required>
+                        <button type="submit" class="submit-btn">GET CODE</button>
+                        <input type="text" id="code" class="input-box" placeholder="Enter The Code" required>
+                      <div class="after">
+                        <input type="password" id="password" class="input-box" placeholder="Enter Password" required>
+                        <input type="password" id="confpassword" class="input-box" placeholder="confirm Password" required>
+                        <button type="submit" class="submit-btn">RESET PASSWORD</button>
+                      </div>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <script src="jquery.js"></script>
+<script>
+    
+        const code = document.querySelector('#code');
+        code.addEventListener('keyup', function () {
+            if (code.value.length >= 5) {
+                $('.after').css({
+                    "display": "block"
+                })
+            }else{
+                  $('.after').css({
+                    "display": "none"
+                })
+            }
+        })
+</script>
+</body>
+
+</html>

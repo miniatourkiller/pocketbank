@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>game</title>
+    <style>
+        .body{
+            height: 50px;
+            width: 50px;
+            background-color: brown;
+            transition-duration: 0.6s;
+        }
+        .canvas{
+            height: 100vh;
+            width: 900px;
+            background-color: black;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div class="canvas">
+        <div class="body"></div>
+        <div class="target"></div>
+    </div>
+    <script src="../savings/jquery.js"></script>
+    <script>
+        var tracker = 0;
+setInterval(function(e){
+    
+$('.body').css({
+    "margin-left":""+tracker+"px",
+     "display": "block"
+})
+    tracker += 50;
+if(tracker == 1000){
+    tracker = -50;
+    $('.body').css({
+        "display": "none"
+    })
+}
+}, 250)
+    </script>
+</body>
+</html>
