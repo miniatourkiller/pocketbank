@@ -57,11 +57,11 @@ public class SavingsServices {
 		
 	}
 	
-	public String destroySavingAccount(	HttpSession session, String savingsAccNo, Savings s) {
+	public String destroySavingAccount(	HttpSession session, String savingsAccName, Savings s) {
 		if(!su.checkSession(session)) {
 			return "expired";
 		}
-		s = sDao.getBysavingsAccNo(savingsAccNo);
+		s = sDao.getBysavingsAccNo(savingsAccName+ su.getSessionArray(session)[2]);
 		if(s.getBalance()>0) {
 			return "invalid";
 		}else {
@@ -97,6 +97,17 @@ public class SavingsServices {
 		}
 		return total;
 	}
+
+
+	public Savings getSavingaccount(String SavingsAccName, HttpSession session){
+		if (!su.checkSession(session)) {
+			return null;
+		}else{
+			return sDao.getBysavingAccName(SavingsAccName);
+		}
+	}
+
+	
 	
 	public String deposit(SavingDetails sd, HttpSession session, Account acc, Savings s, SavingsTransaction st) {
 		if(!su.checkSession(session)) {
@@ -109,14 +120,14 @@ public class SavingsServices {
 		if(acc.getBalance()<sd.getAmount()) {
 			return "insufficient";
 		}else {
-			s = sDao.getBysavingsAccNo(sd.getSavingsAccNo());
+			s = sDao.getBysavingsAccNo(sd.getSavingsAccName()+ su.getSessionArray(session)[2]);
 			s.setBalance(s.getBalance()+sd.getAmount());
 			acc.setBalance(acc.getBalance()-sd.getAmount());
 			accDao.save(acc);
 			sDao.save(s);
 			st.setAmount(sd.getAmount());
 			st.setDateTime(t.dateTime());
-			st.setSavingsAccNo(sd.getSavingsAccNo());
+			st.setSavingsAccNo(sd.getSavingsAccName()+ su.getSessionArray(session)[2]);
 			st.setTransactionCode(gen.generateTransactionCode());
 			st.setType("deposit");
 			stDao.save(st);
@@ -133,7 +144,7 @@ public class SavingsServices {
 			return "expired";
 		}
 		acc = accDao.getAccountUser(su.getSessionArray(session)[2]);
-		s = sDao.getBysavingsAccNo(sd.getSavingsAccNo());
+		s = sDao.getBysavingsAccNo(sd.getSavingsAccName()+ su.getSessionArray(session)[2]);
 		if(!se.checkPassPin(acc.getPin(), sd.getPin())) {
 			return "wrong pin";
 		}else {
@@ -146,7 +157,7 @@ public class SavingsServices {
 					sDao.save(s);
 					st.setAmount(sd.getAmount());
 					st.setDateTime(t.dateTime());
-					st.setSavingsAccNo(sd.getSavingsAccNo());
+					st.setSavingsAccNo(sd.getSavingsAccName()+ su.getSessionArray(session)[2]);
 					st.setTransactionCode(gen.generateTransactionCode());
 					st.setType("deposit");
 					stDao.save(st);
@@ -169,7 +180,7 @@ public class SavingsServices {
 					sDao.save(s);
 					st.setAmount(sd.getAmount());
 					st.setDateTime(t.dateTime());
-					st.setSavingsAccNo(sd.getSavingsAccNo());
+					st.setSavingsAccNo(sd.getSavingsAccName()+ su.getSessionArray(session)[2]);
 					st.setTransactionCode(gen.generateTransactionCode());
 					st.setType("deposit");
 					stDao.save(st);

@@ -44,6 +44,14 @@ public class LoanServices {
 	@Autowired
 	SavingsServices ss;
 	
+	public int checkLimit(HttpSession session, ArrayList<Savings> savings){
+		if (!su.checkSession(session)) {
+			return -1;
+		}
+		return ss.totalSavings(session, savings)*3;
+	}
+
+
 	public String requestLoan(HttpSession session, Account acc, LoanDetails ld, Loan l, int days, ArrayList<Savings> savings) {
 		if(!su.checkSession(session)) {
 			return "expired";
@@ -98,7 +106,12 @@ public class LoanServices {
 		}
 		l = loanDetails(l, session);
 		if(l.getDuration() == null) {
+			if(t.differenceInDays(l.getPenaltyDuration())<0){
+				l.setPenaltyDuration(null);
+				l.setPenalty(false);
+			}
 			return "no loan";
+			///MY TARGET
 		}
 		if(t.differenceInDays(l.getDuration())<0) {
 			l.setPenalty(true);
@@ -134,8 +147,6 @@ public class LoanServices {
 				acc.setBalance(acc.getBalance()-l.getBalance());
 				l.setBalance(0);
 				l.setDuration(null);
-				l.setPenalty(false);
-				l.setPenaltyDuration(null);
 				l.setCounter(0);
 				lDao.save(l);
 				accDao.save(acc);
