@@ -1,9 +1,16 @@
 ban\pocketbanking\entities\Account.class
+ban\pocketbanking\essential\SavingDetails.class
+ban\pocketbanking\entities\Transactions.class
 ban\pocketbanking\essential\DepositDetails.class
-ban\pocketbanking\entities\Send.class
+ban\pocketbanking\essential\WithdrawDetails.class
 ban\pocketbanking\entities\Withdraw.class
 ban\pocketbanking\entities\AtmAgent.class
+ban\pocketbanking\entities\ProfilePic.class
 ban\pocketbanking\entities\Receive.class
+ban\pocketbanking\essential\SendDetails.class
+ban\pocketbanking\essential\LoanDetails.class
+ban\pocketbanking\essential\PinContent.class
+ban\pocketbanking\essential\EmailContent.class
 ban\pocketbanking\entities\Deposit.class
 ban\pocketbanking\entities\Loan.class
 ban\pocketbanking\entities\LoanTransaction.class
@@ -11,3 +18,4 @@ ban\pocketbanking\essential\BalanceCheck.class
 ban\pocketbanking\entities\Savings.class
 ban\pocketbanking\entities\SavingsTransaction.class
 ban\pocketbanking\essential\LoginDetails.class
+ban\pocketbanking\essential\NewPassword.class
