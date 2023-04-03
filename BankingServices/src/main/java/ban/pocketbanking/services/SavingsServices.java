@@ -48,7 +48,7 @@ public class SavingsServices {
 		}else {
 			s.setBalance(0);
 		s.setSavingsAccNo(s.getSavingAccName()+su.getSessionArray(session)[2]);
-		s.setSavingsAccNo(su.getSessionArray(session)[2]);
+		s.setAccNo(su.getSessionArray(session)[2]);
 		sDao.save(s);
 		String message = "You have successfully created a savings account by the name "+s.getSavingAccName()+".";
 		es.sendSimpleMail(message, su.getSessionArray(session)[1]);
@@ -65,9 +65,10 @@ public class SavingsServices {
 		if(s.getBalance()>0) {
 			return "invalid";
 		}else {
+			sDao.delete(s);
 			String message = "You have successfully removed the "+s.getSavingAccName()+" account";
 			es.sendSimpleMail(message, su.getSessionArray(session)[1]);
-			sDao.delete(s);
+			
 			
 			return "done";
 		}
@@ -80,8 +81,7 @@ public class SavingsServices {
 	ArrayList<Savings> s= sDao.getAllSavingsAccounts(su.getSessionArray(session)[2]);
 	if(!s.isEmpty()){
 		return s;
-	}
-	else{
+	}else{
 		return null;
 	}
 	}
@@ -149,8 +149,9 @@ public class SavingsServices {
 			return "wrong pin";
 		}else {
 			if(s.getChoice() == 0) {
-				if(s.getTarget() >= s.getBalance()) {
-					//can withdraw
+				if(s.getTarget() <= s.getBalance()) {
+					System.out.println("able");
+					// can withdraw
 					acc.setBalance(acc.getBalance()+sd.getAmount());
 					s.setBalance(s.getBalance()-sd.getAmount());
 					accDao.save(acc);
@@ -174,6 +175,9 @@ public class SavingsServices {
 			}else if(s.getChoice() == 1) {
 				if(t.differenceInDays(s.getDuration()) <= 0) {
 					//can withdraw
+					if(sd.getAmount()>s.getBalance()){
+						return "insufficient";
+					}
 					acc.setBalance(acc.getBalance()+sd.getAmount());
 					s.setBalance(s.getBalance()-sd.getAmount());
 					accDao.save(acc);

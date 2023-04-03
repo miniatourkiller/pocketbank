@@ -70,6 +70,7 @@ public class AccountServices {
 		}
 		return -1;
 	}
+	
 	public String accountSuggestion(String accno, HttpSession session, Account acc) {
 		if(!su.checkSession(session)) {
 			return "expired";
@@ -82,8 +83,8 @@ public class AccountServices {
 		}
 	}
 	public String send(SendDetails sd, Account acc,Account acc1, HttpSession session, Transactions tr) {
-		if(!su.checkSession(session)) {
-			acc = accDao.getAccountUser(su.getSessionArray(session)[1]);
+		if(su.checkSession(session)) {
+			acc = accDao.getAccountUser(su.getSessionArray(session)[2]);
 			if(!se.checkPassPin(acc.getPin(), sd.getPin())) {
 				return "wrong pin";
 			}
@@ -124,6 +125,9 @@ public class AccountServices {
 		if(!se.checkPassPin(acc.getPin(), wd.getPin())){
 			return "wrong pin";
 		}else {
+			if(acc.getBalance()<wd.getAmount()){
+				return "insufficient";
+			}
 			agt = agtDao.getUserByAgentNo(wd.getAgentNo());
 			agt.setFloatbalance(agt.getFloatbalance()+wd.getAmount());
 			agtDao.save(agt);

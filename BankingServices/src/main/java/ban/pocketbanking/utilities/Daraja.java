@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ban.pocketbanking.essential.C2B;
 import ban.pocketbanking.essential.C2Bresponse;
+import ban.pocketbanking.essential.RegURLDetails;
 import ban.pocketbanking.essential.Token;
 
 
@@ -33,7 +34,7 @@ public class Daraja {
 
    
 
-    public Token token(){
+    public Token gettoken(){
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.APPLICATION_JSON);
         header.set("Authorization", "Basic cFJZcjZ6anEwaThMMXp6d1FETUxwWkIzeVBDa2hNc2M6UmYyMkJmWm9nMHFRR2xWOQ");
@@ -57,7 +58,7 @@ return t;
  public void setToken(){
 
     if(then == null){
-        t = token();
+        t = gettoken();
         token = t.getAccess_token();
         
         then =now.plusMinutes((Integer.valueOf(t.getExpires_in())/60)-5);
@@ -71,6 +72,28 @@ return t;
 
  }
 
+ public ResponseEntity<String> registerUrl(RegURLDetails rud){
+    rud.setShortCode(600984);
+    rud.setResponseType("Completed");
+    HttpHeaders header = new HttpHeaders();
+    header.setContentType(MediaType.APPLICATION_JSON);
+    header.set("Authorization", "Basic cFJZcjZ6anEwaThMMXp6d1FETUxwWkIzeVBDa2hNc2M6UmYyMkJmWm9nMHFRR2xWOQ");
+
+    ObjectMapper obj = new ObjectMapper();
+
+    try{
+        json = obj.writeValueAsString(rud);
+    }catch(Exception e){
+        System.out.println(e);
+    }
+    HttpEntity<String> req = new HttpEntity<>(json, header);
+
+    RestTemplate restTemplate  = new RestTemplate();
+
+    return restTemplate.exchange("https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl",HttpMethod.POST, req,  String.class);
+ }
+
+ 
 
     public C2Bresponse testApiC2B(C2B c2b){
         now = LocalDateTime.now();

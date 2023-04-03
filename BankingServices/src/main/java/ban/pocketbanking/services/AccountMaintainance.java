@@ -124,6 +124,9 @@ AccountDao accDao;
 		 return "done";
 	}
 	public ProfilePic getPic(HttpSession session) {
+		if(!su.checkSession(session)) {
+			return null;
+		}
 		return pDao.getByaccno(su.getSessionArray(session)[2]);
 	}
 }

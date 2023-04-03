@@ -35,14 +35,16 @@ public class LoanServices {
 	Time t;
 	@Autowired
 	Generator gen;
-	@Autowired(required =false)
-	LoanTransaction lt;
+	
+	LoanTransaction lt = new LoanTransaction();
 	@Autowired
 	LoanTransactionDao ltDao;
 	@Autowired
 	LoanDao lDao;
 	@Autowired
 	SavingsServices ss;
+	
+	Loan loan = new Loan();
 	
 	public int checkLimit(HttpSession session, ArrayList<Savings> savings){
 		if (!su.checkSession(session)) {
@@ -61,19 +63,23 @@ public class LoanServices {
 			return "wrong pin";
 		}
 		l = lDao.getLoanUser(su.getSessionArray(session)[2]);
-		if(l.getBalance()>0) {
+	if(l!=null){
+		if (l.getBalance() > 0) {
 			return "repay first";
-		}else if(l.isPenalized()) {
+		} else if (l.isPenalized()) {
 			return "cant access";
-		}else {
+		}
+	}
+
 			if(ld.getAmount()<ss.totalSavings(session, savings)*3) {
 				acc.setBalance(acc.getBalance()+ld.getAmount());
-				l.setBalance((int) (ld.getAmount()*1.1));
-				l.setDuration(t.daysAfter(days));
-				l.setPenalty(false);
-				l.setPenaltyDuration(null);
-				l.setCounter(0);
-				lDao.save(l);
+				loan.setBalance((int) (ld.getAmount()*1.1));
+				loan.setDuration(t.daysAfter(days));
+				loan.setPenalty(false);
+				loan.setPenaltyDuration(null);
+				loan.setCounter(0);
+				loan.setAccNo(su.getSessionArray(session)[2]);
+				lDao.save(loan);
 				accDao.save(acc);
 				lt.setAccno(acc.getAccno());
 				lt.setAmount(ld.getAmount());
@@ -82,14 +88,14 @@ public class LoanServices {
 				lt.setType("request");
 				ltDao.save(lt);
 				String message = lt.getTransactionCode()+" Confirmed on"+t.dateTime()+" you have received a loan "+
-				"of amount ksh"+ld.getAmount()+" due on "+l.getDuration()+". Your new account balance is ksh"+
+				"of amount ksh"+ld.getAmount()+" due on "+loan.getDuration()+". Your new account balance is ksh"+
 						acc.getBalance();
 				es.sendSimpleMail(message, acc.getEmail());
+				return "done";
 			}else {
 				return "loan limit";
 			}
-		}
-		return null;
+		
 	}
 	
 	public Loan loanDetails(Loan l, HttpSession session) {
@@ -105,13 +111,15 @@ public class LoanServices {
 			return "expired";
 		}
 		l = loanDetails(l, session);
-		if(l.getDuration() == null) {
-			if(t.differenceInDays(l.getPenaltyDuration())<0){
-				l.setPenaltyDuration(null);
-				l.setPenalty(false);
-			}
+		if(l == null){
 			return "no loan";
-			///MY TARGET
+		}
+		if(t.differenceInDays(l.getPenaltyDuration())<0){
+			lDao.delete(l);
+			return "penalty removed";
+		}
+		if(l.getDuration() == null){
+			return "penalty in effect";
 		}
 		if(t.differenceInDays(l.getDuration())<0) {
 			l.setPenalty(true);
@@ -141,14 +149,21 @@ public class LoanServices {
 		if(!se.checkPassPin(acc.getPin(), ld.getPin())) {
 			return "wrong pin";
 		}else {
+			if(acc.getBalance()<ld.getAmount()){
+				return "insufficient";
+			}
 			l = lDao.getLoanUser(acc.getAccno());
 			int loanbal = l.getBalance()-ld.getAmount();
 			if(loanbal<= 0) {
 				acc.setBalance(acc.getBalance()-l.getBalance());
-				l.setBalance(0);
-				l.setDuration(null);
-				l.setCounter(0);
-				lDao.save(l);
+				if(l.getPenaltyDuration() == null){
+					lDao.delete(l);
+				}else{
+					l.setBalance(0);
+					l.setDuration(null);
+					l.setCounter(0);
+					lDao.save(l);
+				}
 				accDao.save(acc);
 				lt.setAccno(acc.getAccno());
 				lt.setAmount(ld.getAmount());

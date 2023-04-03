@@ -90,7 +90,7 @@ public class Register {
 		}
 		account.setVerified(true);
 		accDao.save(account);
-		return "verified";
+		return "verified<a href='http://localhost:8089/frontend/account/index.html'>Login</a>";
 	}
 	public String verifyAgent(String vkey,AtmAgent agent) {
 		agent = agentDao.getVerified(vkey);
