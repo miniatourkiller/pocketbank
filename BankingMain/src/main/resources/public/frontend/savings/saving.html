@@ -22,7 +22,7 @@
 <div class="menushowed">
     <ul>
         <li>Account Details</li>
-        <li>Delete Account</li>
+        <li class="del">Delete Account</li>
     </ul>
 </div>
             <div class="savings-header" style="margin:10px;text-align: center">
@@ -30,7 +30,7 @@
                 <h3 class="name"></h3>
             </div>
             <div class="savings-details" style="text-align:center; margin: 20px;">
-                Balance: <span id="balance">ksh 50.00</span><i class="fa fa-eye"></i><br>
+                Balance: ksh<span id="balance"></span><i style="margin: 10px" class="fa fa-eye"></i><br>
                 <br>
                 <p></p>
             </div>
@@ -41,18 +41,18 @@
                     <div class="card-front">
                         <h2>DEPOSIT</h2>
                         <form>
-                            <input type="number" class="input-box" placeholder="Enter Amount" required>
-                            <input type="text" id="password" class="input-box" placeholder="Enter Pin" required>
-                            <button type="submit" class="submit-btn">deposit</button>
+                            <input type="number" class="amount1 input-box" placeholder="Enter Amount" required>
+                            <input type="text" id="password" class="pin1 input-box" placeholder="Enter Pin" required>
+                            <button type="submit" class="deposit submit-btn">deposit</button>
                         </form>
                         <button type="button" class="btn" onclick="openRegister()">Want to withdraw?</button>
                     </div>
                     <div class="card-back">
                         <h2>WITHDRAW</h2>
                         <form>
-                            <input type="number" class="input-box" placeholder="Enter Amount" required>
-                            <input type="text" id="password" class="input-box" placeholder="Enter Pin" required>
-                            <button type="submit" class="submit-btn">withdraw</button>
+                            <input type="number" class="amount2 input-box" placeholder="Enter Amount" required>
+                            <input type="text" id="password" class="pin2 input-box" placeholder="Enter Pin" required>
+                            <button type="submit" class="withdraw submit-btn">withdraw</button>
                         </form>
                         <button type="button" class="btn" onclick="openLogin()">Want to deposit?</button>
                     </div>
@@ -66,7 +66,91 @@
         var url = window.location.search;
         var name = new URLSearchParams(url).get("name");
         $('.name').text(name);
+window.addEventListener('load', function(){
+    $.ajax({
+        type:"GET",
+        url:"http://localhost:8089/getsavingsaccount/"+name,
+        dataType:"json",
+        success: function(data){
+            $('#balance').text(data.balance)
+        }
+    })
+})
 
+$('.deposit').click(function(e){
+    e.preventDefault();
+    var mydata = {
+        "amount":$('.amount1').val(),
+        "pin": $('.pin1').val(),
+        "savingsAccName": name
+    }
+
+    $.ajax({
+        type:"POST",
+        url:"http://localhost:8089/depositsavings",
+        contentType:"application/json",
+        data: JSON.stringify(mydata),
+        success: function(data){
+            if(data == "expired"){
+                window.location= "../account/index.html"
+            }else if(data == "wrong pin"){
+                alert(data)
+            }else if(data == "insufficient"){
+                alert("You have insufficient funds")
+            }else if(data == "done"){
+                alert("Deposit successfull")
+                window.location.reload()
+            }
+        }
+    })
+})
+    $('.withdraw').click(function (e) {
+        e.preventDefault();
+        var mydata = {
+            "amount": $('.amount2').val(),
+            "pin": $('.pin2').val(),
+            "savingsAccName": name
+        }
+
+         $.ajax({
+            type: "POST",
+            url: "http://localhost:8089/withdrawsavings",
+            contentType: "application/json",
+            data: JSON.stringify(mydata),
+            success: function (data) {
+                if (data == "expired") {
+                    window.location = "../account/index.html"
+                } else if (data == "wrong pin") {
+                    alert(data)
+                }else if(data == "target error"){
+                    alert("The target is not reached yet")
+                }else if(data == "duration error"){
+                    alert("Withdrawal day is yet")
+                }else if(data == "done"){
+                    alert("withdrawal successfull")
+                    window.location.relaod()
+                }else if(data == "insufficient"){
+                    alert("Insufficient funds")
+                }
+            }
+        })
+    })
+    $('.del').click(function(){
+        $.ajax({
+            type:"GET",
+            url:`http://localhost:8089/destroysavingsaccount/${name}`,
+            success: function(data){
+                if(data == "expired"){
+                    window.location.reload()
+                }else if(data == "invalid"){
+                    alert("Cann't delete the savings account")
+                }else if(data == "done"){
+                    alert("Success");
+                    window.location = "index.html"
+                }
+            }
+        })
+    })
     </script>
 </body>
 

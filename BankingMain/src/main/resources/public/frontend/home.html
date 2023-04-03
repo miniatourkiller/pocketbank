@@ -139,7 +139,7 @@ height: 70vh;
     <div class="main">
         <div class="containment">
             <div class="sidebar">
-                <img class="img" src="./send.jpg" alt=""><h3>James Karu</h3>
+                <img class="img" src="" alt=""><h3 class="no"></h3>
                 <ul>
                     <li class="choice send active"><i class="fa fa-paper-plane"></i><span class="menutext">Send</span></i></li>
                     <li class="choice withdraw"><i style="margin-top:10px" ><img src="./sendicon.png" alt="" height="30px" width="30px"></i><span class="menutext">Withdraw</span></li>
@@ -253,10 +253,50 @@ height: 70vh;
             $('.dot').eq(tracker/100).addClass("dotactive")
     
         }, 6000);
+
+
         document.querySelector('.content').addEventListener('load',function(){
             $('.loader').css({
                 "display": "none"
             })
+        })
+        window.addEventListener("load", function(){
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8089/checksession",
+                success: function (data) {
+                    if (data) {
+                        var accno = data.split(":");
+                        $('.no').text(accno[2])
+                    } else {
+
+window.location = "./account/index.html"
+                    }
+                }
+            })
+
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8089/establishpenalty",
+                success: function (data) {
+                    
+                }
+            })
+
+$.ajax({
+    type:"GET",
+    url:"http://localhost:8089/getprofilepic",
+    contentType:"application/json",
+    success: function(data){
+        if(data){
+                        console.log(data)
+                         document.querySelector('.img').src = "../profilepics/"+data.filePath
+        }else{
+           
+            document.querySelector('.img').src = "./account/img_avatar2-png-9.png"
+        }
+    }
+})
         })
     </script>
 </body>

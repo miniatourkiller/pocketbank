@@ -15,9 +15,9 @@
                     <h2>LOGIN</h2>
                     <img src="img_avatar2-png-9.png" class="avatar">
                     <form>
-                        <input type="email" class="input-box" placeholder="Enter Email Id" required>
+                        <input type="email" class="email1 input-box" placeholder="Enter Email Id" required>
                         <input type="password" id="password" class="input-box" placeholder="Enter Password" required>
-                        <button type="submit" class="submit-btn">Login</button>
+                        <button type="submit" class="login submit-btn">Login</button>
                     </form>
                     <button type="button" class="btn" onclick="openRegister()">Don't have an account?</button>
                     <a href="./forgetpass.html">Forgot Password</a>
@@ -26,8 +26,8 @@
                     <img src="img_avatar2-png-9.png" class="avatar">
                     <h2>REGISTER</h2>
                     <form>
-                        <input type="text" class="input-box" placeholder="Enter Username" required>
-                        <input type="email" class="input-box" placeholder="Enter Email Id" required>
+                        <input type="text" class="name input-box" placeholder="Your name" required>
+                        <input type="email" class="email2 input-box" placeholder="Enter Email Id" required>
                         <small id="message2" style="color: #ff5925">Passwords dont match</small>
                         <input type="password" id="rpassword" class="input-box" placeholder="Enter Password" required>
                         <p id="message">Password is<span id="strength"></span></p>
@@ -37,7 +37,7 @@
                         <input type="password" id="pin" class="input-box" placeholder="Enter pin" required>
                         <input type="password" id="cpin" class="input-box" placeholder="Confirm pin" required>
                         <p id="message">Password is <span id="strength"></span></p>
-                        <button type="submit" class="submit-btn">Register</button>
+                        <button type="submit" class="register submit-btn">Register</button>
                     </form>
                     <button type="button" class="btn" onclick="openLogin()">I've an account</button>
                 </div>
@@ -45,6 +45,66 @@
         </div>
     </div>  <script src="jquery.js"></script>
     <script src="script.js"></script>
-  
+  <script>
+$('.login').click(function(){
+    var email = $('.email1').val(),
+    password = $('#password').val()
+
+    var mydata={
+        "email":email,
+        "password":password
+    }
+
+    $.ajax({
+        type:"POST",
+        url:"http://localhost:8089/login",
+        contentType:"application/json",
+        data: JSON.stringify(mydata),
+        success: function(data){
+            if(data == "not verified"){
+                alert("You are not verified")
+            }else if(data == "welcome"){
+                alert(data);
+               window.location ="../home.html"
+            }else if(data == "failed"){
+                alert("there was a problem, please try again")
+            }else if(data == "register"){
+                alert("please register")
+            }else if(data == "logout"){
+                window.location = "../home.html"
+            }else if(data = "passwrong"){
+                alert("wrong password")
+            }
+        }
+    })
+})
+$('.register').click(function(){
+var mydata={
+    "owner":$('.name').val(),
+    "email":$('.email2').val(),
+    "password":$('#rpassword').val(),
+    "pin":$('#pin').val()
+}
+
+$.ajax({
+    type:"POST",
+    url:"http://localhost:8089/register",
+    contentType:"application/json",
+    data: JSON.stringify(mydata),
+    success: function(data){
+        if(data == "email exists"){
+            alert("account with that email exists, try to login")
+        }else if(data == "done"){
+            alert("success, you have registered")
+            window.location.reload()
+        }else if(data == "false email"){
+            alert("the email inserted is null")
+        }else if(data == "error"){
+            alert("there was an error")
+        }
+    }
+})
+})
+  </script>
 </body>
 </html>

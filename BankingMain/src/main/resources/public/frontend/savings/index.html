@@ -63,7 +63,7 @@ padding:0px;
 .savings{
     height: 10em;
     width: 40%;
-        background-image: linear-gradient(rgba(32, 32, 32, 0.7), rgba(38, 38, 38, 0.7)), url(ourcard2.jpg);
+    background-image: linear-gradient(rgba(32, 32, 32, 0.7), rgba(38, 38, 38, 0.7)), url(ourcard2.jpg);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -72,10 +72,9 @@ padding:0px;
     box-shadow: 0 3px 5px black;
     border-radius: 30px;
     text-shadow: 0 3px 2px black;
+    position: relative;
 }
-.savings:last-child{
-    display: none;
-}
+
 .savings span{
     position: absolute;
     margin-top: 3em;
@@ -147,6 +146,11 @@ border-radius: 5px;
 .target,.date{
 display: none;
 }
+.innercarrier{
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+}
     </style>
 </head>
 <body>
@@ -162,8 +166,8 @@ display: none;
                 <input type="text" class="accname" placeholder="Enter account name">
                 <select name="" id="" class="choice">
                     <option value="">Select savings parameters</option>
-                    <option value="target">Target</option>
-                    <option value="duration">Date</option>
+                    <option value="0">Target</option>
+                    <option value="1">Date</option>
                 </select>
                 <input type="number" class="target" placeholder="Enter target amount">
                 <input type="date" class="date" placeholder="Choose date">
@@ -187,27 +191,105 @@ display: none;
         </div>
         <div class="carrier">
 
+   
 
-            <div class="savings">
-                <h2 class="name">SCHOOL SAVINGS ACCOUNT</h2>
-                <br>
-                <span>current total savings: ksh 50.00</span>
+            <div class="innercarrier">
+
+
+                <!-- <div class="savings">
+                    <h2 class="name">SCHOOL SAVINGS ACCOUNT</h2>
+                    <br>
+                    <span>current total savings: ksh 50.00</span>
+                </div>
+                <div class="savings">
+                    <h2 class="name">MARRIAGE SAVINGS ACCOUNT</h2>
+                    <br>
+                    <span>current total savings: ksh 0.00</span>
+                </div> -->
+
+
+
             </div>
-            <div class="savings">
-                <h2 class="name">MARRIAGE SAVINGS ACCOUNT</h2>
-                <br>
-                <span>current total savings: ksh 0.00</span>
-            </div>
-        
-            <div class="addsavings">
-                <span>Add Account</span>
-                <i class="fa fa-plus"></i>
-            </div>
+            
+<div class="outercarrier">
+        <div class="addsavings">
+            <span>Add Account</span>
+            <i class="fa fa-plus"></i>
         </div>
-    </div>
+
+</div>
+            </div>
+         
+        </div>
+
+    
 
     <script src="../savings/jquery.js"></script>
     <script>
+        $('.submit').click(function(){
+
+            var target = $('.target').val(),
+            choice = $('.choice').val()
+
+
+            var mydata = {
+                "savingAccName":$('.accname').val(),
+                "choice": Number(choice),
+                "target": Number(target),
+                "duration": $('.date').val()
+            }
+            $.ajax({
+                type:"POST",
+                url: "http://localhost:8089/createsavingsaccount",
+                contentType:"application/json",
+                data: JSON.stringify(mydata),
+                success: function(data){
+                    if(data== "expired"){
+                        window.location = "../account/index.html"
+                    }else if(data == "exists"){
+                        alert("The account exists")
+                    }else if(data == "done"){
+                        alert(data)
+                        window.location.reload()
+                    }
+                },
+                fail: function(){
+                    alert("check your internet connection")
+                }
+            })
+        })
+
+        window.addEventListener("load", function(){
+            $.ajax({
+                type:"GET",
+                url:"http://localhost:8089/getsavingsaccounts",
+                dataType:"json",
+                success: function(data){
+                    if(data.length >0){
+
+                        $('.amount').text(data.length)
+
+                        for(var i =0; i<data.length; i++){
+                            var division = ` <div class="savings">
+                    <h2 class="name">${data[i].savingAccName}</h2>
+                    <br>
+                    <span>current total savings: ksh ${data[i].balance}</span>
+                </div>`
+                 $('.innercarrier').append(division)
+                        }
+                         $('.savings').click(function () {
+                            var name = $('.name').eq($(this).index()).text();
+                            window.location = "./saving.html?name=" + name;
+                        })
+                    }else if(data == 0){
+                        var h1 = `<h1>No accounts yet. Create one</h1>`;
+                       
+                        $('.innercarrier').append(h1)
+                    }
+                }
+            })
+        })
+
         $('.nav').load("../navbar/nav.html");
         $('.addsavings').click(function(){
             $('.container').css({
@@ -219,21 +301,21 @@ display: none;
                 "display": "none"
             })
         })
-        const divs = document.querySelectorAll('.savings');
+        
 
-        $('.amount').text(divs.length)
+      
 
         const choice = document.querySelector('.choice');
 
         choice.addEventListener('input', function(){
-            if(choice.value == "target"){
+            if(choice.value == "0"){
                 $('.target').css({
                     "display":"block"
                 })
                   $('.date').css({
                     "display": "none"
                 })
-            }else if(choice.value == "duration"){
+            }else if(choice.value == "1"){
                 $('.date').css({
                     "display": "block"
                 })
@@ -250,10 +332,7 @@ display: none;
             }
         })
 
-        $('.savings').click(function(){
-            var name = $('.name').eq($(this).index()).text();
-            window.location = "./saving.html?name="+name;
-        })
+       
     </script>
 </body>
 </html>

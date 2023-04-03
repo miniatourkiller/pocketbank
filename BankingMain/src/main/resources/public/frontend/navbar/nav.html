@@ -58,12 +58,25 @@ a:hover{
         </div>
         <div class="unordered">
             <ul class="menu">
-                <a href=""><li><i class="fa fa-home"></i><br><span class="menuli">Home</span></li></a>
+                <a href="http://localhost:8089/frontend/home.html"><li><i class="fa fa-home"></i><br><span class="menuli">Home</span></li></a>
 <a href=""><li><i class="fa fa-book"></i><br><span class="menuli">Account</span></li></a>
-<a href=""><li><i class="fa fa-sign-out"></i><br><span class="menuli">Logout</span></li></a>
+<a href="" ><li class="logout"><i class="fa fa-sign-out"></i><br><span class="menuli">Logout</span></li></a>
 <a href=""><li><i class="fa fa-phone"></i><br><span class="menuli">Contact</span></li></a>
             </ul>
         </div>
     </div>
+    <script>
+document.querySelector('.logout').addEventListener("click", function(e){
+    e.preventDefault()
+    fetch("http://localhost:8089/logout")
+    .then(response => response.text)
+    .then(data =>function(){
+        alert(data)
+        if(data == "done"){
+            window.location = "../account/index.html"
+        }
+    })
+})
+    </script>
 </body>
 </html>

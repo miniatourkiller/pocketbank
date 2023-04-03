@@ -85,9 +85,9 @@ position: inherit;
        <div class="outer">
             <div class="card-front">
                 <form>
-                    <input type="number" class="input-box" placeholder="Enter Amount" required>
-                    <input type="text" id="password" class="input-box" placeholder="Enter Pin" required>
-                    <button type="submit" class="submit-btn">Apply Loan</button>
+                    <input type="number" class="amount1 input-box" placeholder="Enter Amount" required>
+                    <input type="text" id="pin1" class="input-box" placeholder="Enter Pin" required>
+                    <button type="submit" class="apply submit-btn">Apply Loan</button>
                 </form>
             </div>
         </div>
@@ -102,9 +102,9 @@ position: inherit;
     <div class="outer">
         <div class="card-front">
             <form>
-                <input type="number" class="input-box" placeholder="Enter Amount" required>
-                <input type="text" id="password" class="input-box" placeholder="Enter Pin" required>
-                <button type="submit" class="submit-btn">Repay Loan</button>
+                <input type="number" class="amount2 input-box" placeholder="Enter Amount" required>
+                <input type="text" id="pin2" class="input-box" placeholder="Enter Pin" required>
+                <button type="submit" class="repay submit-btn">Repay Loan</button>
             </form>
         </div>
     </div>
@@ -122,10 +122,10 @@ position: inherit;
 <div class="outer">
         <div class="card-front">
             <form class="deets">
-               <h1>BALANCE: ksh <span class="bal">50.00</span><br></h1>
-              <h1>DUE: <span>14/3/2020</span><br></h1>
-              <h1>PENALTY: <span>NO PENALTY</span><br></h1>
-              <h1>PENALTY DURATION: <span>N/O</span></h1>
+               <h1>BALANCE: ksh <span class="bal"></span><br></h1>
+              <h1>DUE: <span class="due"></span><br></h1>
+              <h1>PENALTY: <span class="penalty"></span><br></h1>
+              <h1>PENALTY DURATION: <span class="duration"></span></h1>
             </form>
         </div>
     </div>
@@ -133,6 +133,62 @@ position: inherit;
    </div>
    <script src="./savings/jquery.js"></script>
    <script>
+
+    $('.apply').click((e)=>{
+        e.preventDefault()
+var mydata = {
+    "amount": $('.amount1').val(),
+    "pin":$('#pin1').val()
+}
+$.ajax({
+    type:"POST",
+    url:"http://localhost:8089/requestloan",
+    contentType:"application/json",
+    data: JSON.stringify(mydata),
+    success: function(data){
+        if(data == "expired"){
+            window.location = "./account/index.html"
+        }else if(data == "wrong pin"){
+            alert(data)
+        }else if(data == "repay first"){
+            alert("You have an existing loan")
+        }else if(data == "cant access"){
+            alert("You have a penalty hence cannt access loan")
+        }else if(data == "loan limit"){
+            alert("you have a low loan limit")
+        }else if (data == "done"){
+            alert("Success");
+            window.location.reload()
+        }
+    }
+})
+    })
+    
+        $('.repay').click((e) => {
+            e.preventDefault()
+            var mydata = {
+                "amount": $('.amount2').val(),
+                "pin": $('#pin2').val()
+            }
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8089/repayloan",
+                contentType: "application/json",
+                data: JSON.stringify(mydata),
+                success: function (data) {
+                    if (data == "expired") {
+                        window.location = "./account/index.html"
+                    } else if (data == "wrong pin") {
+                        alert(data)
+                    } else if (data == "insufficient") {
+                        alert("You have insufficient balance")
+                    }else if(data == "done"){
+                        alert("Success");
+                        window.location.reload()
+                    }
+                }
+            })
+        })
     var counter2 = 0;
     var counter1 = 0;
     var counter3 = 0
@@ -217,21 +273,48 @@ if(counter1 == 1){
  }
   
 })
-  var  tracker = 0;
-$('.showlimit').click(function(){
-    var limit = 400;
+ 
 
-    tracker ++;
+    $.ajax({
+        type: "GET",
+        url:"http://localhost:8089/checklimit",
+        success: function(data){
+            if(data == -1){
+                window.location = "./account/index.html"
+            }else{
+                var tracker = 0;
+                $('.showlimit').click(function () {
+                    
 
-    if(tracker == 2){
-        tracker = 0;
+                    tracker++;
+
+                    if (tracker == 2) {
+                        tracker = 0;
+                    }
+                    if (tracker == 1) {
+                        $('.limit').text(data);
+                    } else if (tracker == 0) {
+                        $('.limit').text("****");
+                    }
+
+                })
+            }
+        }
+    })
+$.ajax({
+    type:"GET",
+    url:"http://localhost:8089/checkloan",
+    success: function(data){
+        if(data){
+            $('.bal').text(data.balance)
+            $('.due').text(data.duration)
+            $('.duration').text(data.penaltyDuration)
+           $('.penalty').text(data.penalized)
+        }
+        else{
+            $('.bal').text("No outstanding loans")
+        }
     }
-    if(tracker == 1){
-        $('.limit').text(limit);
-    }else if(tracker == 0){
-         $('.limit').text("****");
-    }
-
 })
    </script>
 </body>
