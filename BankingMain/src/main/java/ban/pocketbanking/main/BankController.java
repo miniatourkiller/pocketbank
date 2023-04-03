@@ -20,6 +20,7 @@ import ban.pocketbanking.entities.Account;
 import ban.pocketbanking.entities.AtmAgent;
 import ban.pocketbanking.entities.Deposit;
 import ban.pocketbanking.entities.Loan;
+import ban.pocketbanking.entities.MpesaDarajaResult;
 import ban.pocketbanking.entities.ProfilePic;
 import ban.pocketbanking.entities.Savings;
 import ban.pocketbanking.entities.SavingsTransaction;
@@ -33,6 +34,7 @@ import ban.pocketbanking.essential.EmailContent;
 import ban.pocketbanking.essential.LoanDetails;
 import ban.pocketbanking.essential.LoginDetails;
 import ban.pocketbanking.essential.NewPassword;
+import ban.pocketbanking.essential.RegURLDetails;
 import ban.pocketbanking.essential.SavingDetails;
 import ban.pocketbanking.essential.SendDetails;
 import ban.pocketbanking.essential.WithdrawDetails;
@@ -42,9 +44,9 @@ import ban.pocketbanking.services.AgentServices;
 import ban.pocketbanking.services.CheckBal;
 import ban.pocketbanking.services.LoanServices;
 import ban.pocketbanking.services.Login;
+import ban.pocketbanking.services.MpesaPayments;
 import ban.pocketbanking.services.Register;
 import ban.pocketbanking.services.SavingsServices;
-import ban.pocketbanking.utilities.Daraja;
 import ban.pocketbanking.utilities.SessionUtil;
 
 @RestController
@@ -174,12 +176,12 @@ public String repayLoan(HttpServletRequest req, Account acc, Loan l,@RequestBody
 	return ls.payLoan(req.getSession(), l, acc, ld);
 }
 
-@RequestMapping(value = "checkloan", method= RequestMethod.POST)
+@RequestMapping(value = "checkloan", method= RequestMethod.GET)
 public Loan checkLoan(Loan l, HttpServletRequest req) {
 	return ls.loanDetails(l, req.getSession());
 }
 
-@RequestMapping(value = "establishpenalty", method= RequestMethod.POST)
+@RequestMapping(value = "establishpenalty", method= RequestMethod.GET)
 public String establishPenalty(HttpServletRequest req, Loan l) {
 	return ls.establishPenalty(req.getSession(), l, days);
 }
@@ -252,9 +254,26 @@ public ProfilePic getprofilepic( HttpServletRequest req) {
 }
 
 @Autowired
-Daraja daraja;
+MpesaPayments mpesaPayments;
+
 @RequestMapping(value = "daraja", method= RequestMethod.POST)
-public C2Bresponse daraja(@RequestBody C2B c2b){
-return daraja.testApiC2B(c2b);
+public C2Bresponse daraja(@RequestBody C2B c2b, HttpServletRequest req){
+return mpesaPayments.mpesaDeposit(c2b, req.getSession());
+}
+
+@RequestMapping(value = "validation")
+public void validate(){
+	mpesaPayments.validation();
+}
+@RequestMapping(value = "confirmation", method = RequestMethod.POST)
+public String confirm(@RequestBody MpesaDarajaResult mdr, Account acc){
+return mpesaPayments.depositConfirmationMpesa(mdr, acc);
+}
+
+@RequestMapping(value = "registerurl", method = RequestMethod.POST)
+public ResponseEntity<String> regURLs(@RequestBody RegURLDetails reg) {
+	return mpesaPayments.regURLs(reg);
 }
 }
+
+

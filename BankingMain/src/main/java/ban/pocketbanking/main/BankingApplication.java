@@ -9,8 +9,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class},scanBasePackages = {"ban.pocketbanking.*"})
 @EntityScan(basePackages = {"ban.pocketbanking.*"})
-@ComponentScan({"ban.pocketbanking.*"})
-@EnableJpaRepositories({"ban.pocketbanking.*"})
+@ComponentScan({"ban.pocketbanking.*"})    
+@EnableJpaRepositories({"ban.pocketbanking.*"}) 
 public class BankingApplication {
 public static void main(String[] args) {
 	SpringApplication.run(BankingApplication.class,args);

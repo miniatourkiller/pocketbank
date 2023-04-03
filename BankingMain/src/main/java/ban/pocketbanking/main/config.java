@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import ban.pocketbanking.essential.BalanceCheck;
-import ban.pocketbanking.essential.C2B;
 import ban.pocketbanking.essential.C2Bresponse;
 import ban.pocketbanking.essential.DepositDetails;
 import ban.pocketbanking.essential.EmailContent;
@@ -12,6 +11,7 @@ import ban.pocketbanking.essential.LoanDetails;
 import ban.pocketbanking.essential.LoginDetails;
 import ban.pocketbanking.essential.NewPassword;
 import ban.pocketbanking.essential.PinContent;
+import ban.pocketbanking.essential.RegURLDetails;
 import ban.pocketbanking.essential.SavingDetails;
 import ban.pocketbanking.essential.SendDetails;
 import ban.pocketbanking.essential.Token;
@@ -102,5 +102,9 @@ Daraja setDaraja(){
 @Bean
 Token setToken(){
 	return new Token();
+}
+@Bean
+RegURLDetails setRegURLDetails(){
+	return new RegURLDetails();
 }
 }
